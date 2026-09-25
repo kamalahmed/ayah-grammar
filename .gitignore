@@ -1,6 +1,9 @@
 # Dependencies, builds and local environments
 node_modules/
 dist/
+# Purchased reference books stay on the local machine.
+*.pdf
+public/books/
 *.tsbuildinfo
 .venv*/
 venv/

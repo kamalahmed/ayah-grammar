@@ -33,7 +33,7 @@ Bangla is central to the experience, alongside English. My focus is a calm readi
 
 ### Build familiarity with 500 verbs
 
-![Searchable 500-verb library with Arabic forms, Bangla conjugations and an original-book page link](docs/images/verb-library.jpg)
+![Searchable 500-verb library with Arabic forms, Bangla conjugations and source-page references](docs/images/verb-library.jpg)
 
 <table>
   <tr>
@@ -46,7 +46,7 @@ Bangla is central to the experience, alongside English. My focus is a calm readi
   </tr>
 </table>
 
-*Screenshots are from the running app. The layout adapts from a desktop study workspace to a phone-sized reader.*
+*Screenshots are from my local study setup. The layout adapts from a desktop study workspace to a phone-sized reader. Original-page links shown in the screenshots require a locally owned copy of the books; the PDFs are not included in this repository.*
 
 ## What you can do
 
@@ -56,7 +56,7 @@ Bangla is central to the experience, alongside English. My focus is a calm readi
 | See Bangla and English word meanings | Inspect root, word type and morphology | Study **6,978 supplied conjugation meanings** |
 | Read complete ayah translations | Compare verb forms and active/passive occurrences | Filter by book level and verb form |
 | Highlight verbs while reading | Follow cited examples back to their ayahs | Hide meanings and test your recall |
-| Keep your current surah and ayah in view | Compare past, present/future and command forms | Open the original book page for a chart |
+| Keep your current surah and ayah in view | Compare past, present/future and command forms | Check entry numbers and source-page references |
 
 ### A reading space that adapts
 
@@ -78,7 +78,13 @@ Bangla is central to the experience, alongside English. My focus is a calm readi
 
 The book collection supplies masculine and first-person forms. Feminine, dual and passive Bangla meanings are left absent where the books do not supply them. The two readings of entry 374 are both preserved, giving **501 readings across 500 numbered entries**. Two entries have no conjugation table, and one has past forms only.
 
-Book transcriptions have completeness checks and targeted visual review; they have not all been independently proofread. Source links and review notes make unusual entries easier to check.
+Book transcriptions have completeness checks and targeted visual review; they have not all been independently proofread. Entry numbers, page references and review notes make unusual entries easier to check against a personal copy.
+
+### My reference books
+
+I use my purchased copies of **Quran words, Levels 1 and 2** as references for the Arabic–Bangla verb study material. I keep the original books on my own computer. **The book PDFs are not distributed with this project and are excluded from Git.**
+
+The app's vocabulary and conjugation datasets are included, so you can use the reader and study charts without the PDFs. Source-page references acknowledge the books and support checking a form against your own copy.
 
 ## Run it locally
 
@@ -133,7 +139,6 @@ Each word is identified by **surah, ayah and word position**. Chapters load on d
 ```text
 src/                 Reader, study panels, themes and conjugation datasets
 public/data/         All 114 chapters, chapter metadata and verb occurrences
-public/books/        Original reference PDFs linked from the study charts
 data/raw/            Source text, translations, morphology and SQLite databases
 data/books/          Full 500-verb export with provenance, plus CSV
 scripts/             Data preparation, conjugation and book-extraction tools
@@ -152,9 +157,9 @@ I built the study interface around the work of these projects and contributors:
 - **[Quranic Arabic Corpus](https://corpus.quran.com/):** word-level roots, morphology and occurrence references.
 - **[Greentech Apps Foundation](https://github.com/GreentechApps/Al-Quran):** English and Bengali word databases.
 - **[Qutrub](https://github.com/linuxscout/qutrub):** Arabic reference conjugations.
-- **Quran words, Levels 1 and 2:** the Arabic–Bangla book charts in the verb library.
+- **Quran words, Levels 1 and 2:** reference material for my Arabic–Bangla verb study collection. My thanks to the authors and publishers; the purchased PDFs remain local and are not included here.
 
-Third-party text, translations, databases and books retain their original ownership and applicable terms. Repository availability does not grant a new license to those materials. Original source notices are retained in [NOTICES.txt](public/NOTICES.txt).
+I credit the sources behind the text, translations, databases and study material. Their original ownership and applicable terms remain unchanged. Original source notices are retained in [NOTICES.txt](public/NOTICES.txt).
 
 ---
 

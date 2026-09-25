@@ -18,7 +18,8 @@ Words are aligned by surah, ayah and position. Four known word-boundary differen
 - `data/books/quran-verbs-500.json`: full export with PDF page/cell coordinates and correction records.
 - `data/books/quran-verbs-500.csv`: spreadsheet-friendly UTF-8 export.
 - `src/bookVerbs.json`: compact application copy.
-- `public/books/level-1.pdf` and `level-2.pdf`: original source pages.
+
+The original PDF books are **not included in the repository**. They are not required to run the app or import the bundled study data. Local PDF files are ignored by Git.
 
 ```bash
 python3 scripts/build_book_verb_meanings.py
@@ -29,6 +30,8 @@ The importer accepts the version 2 master export. It checks numbered entry cover
 The collection contains 500 numbered entries, 501 readings and 6,978 conjugation cells. The identical repeat of entry 202 is deduplicated. Entry 374 has two different readings, both retained. Entries 91 and 190 have no conjugation tables; entry 30 contains past forms only.
 
 ### Extracting again from the PDFs
+
+This optional step requires your own copies of the source books. The defaults look for `public/books/level-1.pdf` and `public/books/level-2.pdf` locally; both are ignored by Git. Set `QURAN_BOOK_DIR` to use another local folder.
 
 The books' embedded Unicode maps are inconsistent with their rendered glyphs. The extraction scripts use a reviewed glyph map, table geometry, Bengali character reordering and Tesseract OCR for Level 2 entry numbers. Corrections and known questionable printed forms are recorded in the master export.
 
@@ -43,7 +46,7 @@ python3 -m venv .venv-book-extract
 .venv-book-extract/bin/python scripts/book_extract/publish.py
 ```
 
-This optional workflow also requires Tesseract 5 on the command line. The Bengali model is bundled with its Apache-2.0 license. Defaults use the repository's PDF copies and save temporary tables under ignored `data/book-extraction-work/`. `QURAN_APP_DIR`, `QURAN_BOOK_DIR`, `QURAN_EXTRACT_WORK` and `QURAN_TESSDATA_DIR` override these locations.
+This optional workflow also requires Tesseract 5 on the command line. The Bengali model is bundled with its Apache-2.0 license. Defaults use your local PDF copies and save temporary tables under ignored `data/book-extraction-work/`. `QURAN_APP_DIR`, `QURAN_BOOK_DIR`, `QURAN_EXTRACT_WORK` and `QURAN_TESSDATA_DIR` override these locations.
 
 The glyph map and numbering corrections apply to the exact source editions whose hashes are recorded in the master. A different edition needs a fresh layout review. Re-extracting regenerates the export; preserve any additional manual corrections before doing so.
 

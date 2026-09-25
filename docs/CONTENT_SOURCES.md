@@ -13,7 +13,9 @@ Ayah Grammar connects source text, translations and morphology through word loca
 | Word grammar | [Quranic Arabic Corpus v0.4](https://corpus.quran.com/download/) | `data/raw/quranic-corpus-morphology-0.4.txt` |
 | English and Bengali word glosses | [Greentech Apps Foundation](https://github.com/GreentechApps/Al-Quran/tree/master/dbs) | `data/raw/gtaf-words-en.db`, `data/raw/gtaf-words-bn.db` |
 | Reference and selected-root paradigms | Corpus citations and [Qutrub](https://github.com/linuxscout/qutrub) | `src/referenceParadigms.json`, `src/selectedParadigms.json` |
-| Book conjugations and Bangla meanings | Quran words, Levels 1 and 2 | `public/books/`, `data/books/`, `src/bookVerbs.json` |
+| Book conjugations and Bangla meanings | Quran words, Levels 1 and 2, consulted from purchased personal copies | `data/books/`, `src/bookVerbs.json`; source PDFs are not distributed |
+
+The original book PDFs are kept locally and excluded from Git. The study datasets retain entry and page references for checking against a personal copy. Thanks to the books' authors and publishers for the reference material.
 
 Original ownership and applicable source terms remain with the respective projects, translators and book publishers. This repository does not relicense third-party datasets or books. See the preserved [notices](../public/NOTICES.txt), the [Tanzil text license](https://tanzil.net/docs/Text_License) and each source's own terms. The GTAF repository does not identify a separate license for the word database files; do not infer one from their inclusion here. Qutrub is distributed under the GPL.
 
