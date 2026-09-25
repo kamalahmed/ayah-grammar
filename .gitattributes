@@ -1,0 +1,10 @@
+* text=auto
+*.db binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.traineddata binary
+
+# Preserve the original source bytes and notices.
+data/raw/* -text -whitespace
+public/NOTICES.txt -text -whitespace

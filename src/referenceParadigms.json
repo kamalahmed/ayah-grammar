@@ -1,0 +1,870 @@
+{
+  "triliteral": {
+    "I": {
+      "1S": {
+        "perfect": "فَعَلْتُ",
+        "imperfect": "أَفْعَلُ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "فَعَلْنَا",
+        "imperfect": "نَفْعَلُ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "فَعَلْتَ",
+        "imperfect": "تَفْعَلُ",
+        "imperative": "اِفْعَلْ"
+      },
+      "2FS": {
+        "perfect": "فَعَلْتِ",
+        "imperfect": "تَفْعَلِينَ",
+        "imperative": "اِفْعَلِي"
+      },
+      "2MD": {
+        "perfect": "فَعَلْتُمَا",
+        "imperfect": "تَفْعَلَانِ",
+        "imperative": "اِفْعَلَا"
+      },
+      "2FD": {
+        "perfect": "فَعَلْتُمَا",
+        "imperfect": "تَفْعَلَانِ",
+        "imperative": "اِفْعَلَا"
+      },
+      "2MP": {
+        "perfect": "فَعَلْتُم",
+        "imperfect": "تَفْعَلُونَ",
+        "imperative": "اِفْعَلُوا"
+      },
+      "2FP": {
+        "perfect": "فَعَلْتُنَّ",
+        "imperfect": "تَفْعَلْنَ",
+        "imperative": "اِفْعَلْنَ"
+      },
+      "3MS": {
+        "perfect": "فَعَلَ",
+        "imperfect": "يَفْعَلُ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "فَعَلَتْ",
+        "imperfect": "تَفْعَلُ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "فَعَلَا",
+        "imperfect": "يَفْعَلَانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "فَعَلَتَا",
+        "imperfect": "تَفْعَلَانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "فَعَلُوا",
+        "imperfect": "يَفْعَلُونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "فَعَلْنَ",
+        "imperfect": "يَفْعَلْنَ",
+        "imperative": null
+      }
+    },
+    "II": {
+      "1S": {
+        "perfect": "فَعَّلْتُ",
+        "imperfect": "أُفَعِّلُ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "فَعَّلْنَا",
+        "imperfect": "نُفَعِّلُ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "فَعَّلْتَ",
+        "imperfect": "تُفَعِّلُ",
+        "imperative": "فَعِّلْ"
+      },
+      "2FS": {
+        "perfect": "فَعَّلْتِ",
+        "imperfect": "تُفَعِّلِينَ",
+        "imperative": "فَعِّلِي"
+      },
+      "2MD": {
+        "perfect": "فَعَّلْتُمَا",
+        "imperfect": "تُفَعِّلَانِ",
+        "imperative": "فَعِّلَا"
+      },
+      "2FD": {
+        "perfect": "فَعَّلْتُمَا",
+        "imperfect": "تُفَعِّلَانِ",
+        "imperative": "فَعِّلَا"
+      },
+      "2MP": {
+        "perfect": "فَعَّلْتُم",
+        "imperfect": "تُفَعِّلُونَ",
+        "imperative": "فَعِّلُوا"
+      },
+      "2FP": {
+        "perfect": "فَعَّلْتُنَّ",
+        "imperfect": "تُفَعِّلْنَ",
+        "imperative": "فَعِّلْنَ"
+      },
+      "3MS": {
+        "perfect": "فَعَّلَ",
+        "imperfect": "يُفَعِّلُ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "فَعَّلَتْ",
+        "imperfect": "تُفَعِّلُ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "فَعَّلَا",
+        "imperfect": "يُفَعِّلَانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "فَعَّلَتَا",
+        "imperfect": "تُفَعِّلَانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "فَعَّلُوا",
+        "imperfect": "يُفَعِّلُونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "فَعَّلْنَ",
+        "imperfect": "يُفَعِّلْنَ",
+        "imperative": null
+      }
+    },
+    "III": {
+      "1S": {
+        "perfect": "فَاعَلْتُ",
+        "imperfect": "أُفَاعِلُ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "فَاعَلْنَا",
+        "imperfect": "نُفَاعِلُ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "فَاعَلْتَ",
+        "imperfect": "تُفَاعِلُ",
+        "imperative": "فَاعِلْ"
+      },
+      "2FS": {
+        "perfect": "فَاعَلْتِ",
+        "imperfect": "تُفَاعِلِينَ",
+        "imperative": "فَاعِلِي"
+      },
+      "2MD": {
+        "perfect": "فَاعَلْتُمَا",
+        "imperfect": "تُفَاعِلَانِ",
+        "imperative": "فَاعِلَا"
+      },
+      "2FD": {
+        "perfect": "فَاعَلْتُمَا",
+        "imperfect": "تُفَاعِلَانِ",
+        "imperative": "فَاعِلَا"
+      },
+      "2MP": {
+        "perfect": "فَاعَلْتُم",
+        "imperfect": "تُفَاعِلُونَ",
+        "imperative": "فَاعِلُوا"
+      },
+      "2FP": {
+        "perfect": "فَاعَلْتُنَّ",
+        "imperfect": "تُفَاعِلْنَ",
+        "imperative": "فَاعِلْنَ"
+      },
+      "3MS": {
+        "perfect": "فَاعَلَ",
+        "imperfect": "يُفَاعِلُ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "فَاعَلَتْ",
+        "imperfect": "تُفَاعِلُ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "فَاعَلَا",
+        "imperfect": "يُفَاعِلَانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "فَاعَلَتَا",
+        "imperfect": "تُفَاعِلَانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "فَاعَلُوا",
+        "imperfect": "يُفَاعِلُونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "فَاعَلْنَ",
+        "imperfect": "يُفَاعِلْنَ",
+        "imperative": null
+      }
+    },
+    "IV": {
+      "1S": {
+        "perfect": "أَفْعَلْتُ",
+        "imperfect": "أُفْعِلُ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "أَفْعَلْنَا",
+        "imperfect": "نُفْعِلُ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "أَفْعَلْتَ",
+        "imperfect": "تُفْعِلُ",
+        "imperative": "أَفْعِلْ"
+      },
+      "2FS": {
+        "perfect": "أَفْعَلْتِ",
+        "imperfect": "تُفْعِلِينَ",
+        "imperative": "أَفْعِلِي"
+      },
+      "2MD": {
+        "perfect": "أَفْعَلْتُمَا",
+        "imperfect": "تُفْعِلَانِ",
+        "imperative": "أَفْعِلَا"
+      },
+      "2FD": {
+        "perfect": "أَفْعَلْتُمَا",
+        "imperfect": "تُفْعِلَانِ",
+        "imperative": "أَفْعِلَا"
+      },
+      "2MP": {
+        "perfect": "أَفْعَلْتُم",
+        "imperfect": "تُفْعِلُونَ",
+        "imperative": "أَفْعِلُوا"
+      },
+      "2FP": {
+        "perfect": "أَفْعَلْتُنَّ",
+        "imperfect": "تُفْعِلْنَ",
+        "imperative": "أَفْعِلْنَ"
+      },
+      "3MS": {
+        "perfect": "أَفْعَلَ",
+        "imperfect": "يُفْعِلُ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "أَفْعَلَتْ",
+        "imperfect": "تُفْعِلُ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "أَفْعَلَا",
+        "imperfect": "يُفْعِلَانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "أَفْعَلَتَا",
+        "imperfect": "تُفْعِلَانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "أَفْعَلُوا",
+        "imperfect": "يُفْعِلُونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "أَفْعَلْنَ",
+        "imperfect": "يُفْعِلْنَ",
+        "imperative": null
+      }
+    },
+    "V": {
+      "1S": {
+        "perfect": "تَفَعَّلْتُ",
+        "imperfect": "أَتَفَعَّلُ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "تَفَعَّلْنَا",
+        "imperfect": "نَتَفَعَّلُ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "تَفَعَّلْتَ",
+        "imperfect": "تَتَفَعَّلُ",
+        "imperative": "تَفَعَّلْ"
+      },
+      "2FS": {
+        "perfect": "تَفَعَّلْتِ",
+        "imperfect": "تَتَفَعَّلِينَ",
+        "imperative": "تَفَعَّلِي"
+      },
+      "2MD": {
+        "perfect": "تَفَعَّلْتُمَا",
+        "imperfect": "تَتَفَعَّلَانِ",
+        "imperative": "تَفَعَّلَا"
+      },
+      "2FD": {
+        "perfect": "تَفَعَّلْتُمَا",
+        "imperfect": "تَتَفَعَّلَانِ",
+        "imperative": "تَفَعَّلَا"
+      },
+      "2MP": {
+        "perfect": "تَفَعَّلْتُم",
+        "imperfect": "تَتَفَعَّلُونَ",
+        "imperative": "تَفَعَّلُوا"
+      },
+      "2FP": {
+        "perfect": "تَفَعَّلْتُنَّ",
+        "imperfect": "تَتَفَعَّلْنَ",
+        "imperative": "تَفَعَّلْنَ"
+      },
+      "3MS": {
+        "perfect": "تَفَعَّلَ",
+        "imperfect": "يَتَفَعَّلُ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "تَفَعَّلَتْ",
+        "imperfect": "تَتَفَعَّلُ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "تَفَعَّلَا",
+        "imperfect": "يَتَفَعَّلَانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "تَفَعَّلَتَا",
+        "imperfect": "تَتَفَعَّلَانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "تَفَعَّلُوا",
+        "imperfect": "يَتَفَعَّلُونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "تَفَعَّلْنَ",
+        "imperfect": "يَتَفَعَّلْنَ",
+        "imperative": null
+      }
+    },
+    "VI": {
+      "1S": {
+        "perfect": "تَفَاعَلْتُ",
+        "imperfect": "أَتَفَاعَلُ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "تَفَاعَلْنَا",
+        "imperfect": "نَتَفَاعَلُ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "تَفَاعَلْتَ",
+        "imperfect": "تَتَفَاعَلُ",
+        "imperative": "تَفَاعَلْ"
+      },
+      "2FS": {
+        "perfect": "تَفَاعَلْتِ",
+        "imperfect": "تَتَفَاعَلِينَ",
+        "imperative": "تَفَاعَلِي"
+      },
+      "2MD": {
+        "perfect": "تَفَاعَلْتُمَا",
+        "imperfect": "تَتَفَاعَلَانِ",
+        "imperative": "تَفَاعَلَا"
+      },
+      "2FD": {
+        "perfect": "تَفَاعَلْتُمَا",
+        "imperfect": "تَتَفَاعَلَانِ",
+        "imperative": "تَفَاعَلَا"
+      },
+      "2MP": {
+        "perfect": "تَفَاعَلْتُم",
+        "imperfect": "تَتَفَاعَلُونَ",
+        "imperative": "تَفَاعَلُوا"
+      },
+      "2FP": {
+        "perfect": "تَفَاعَلْتُنَّ",
+        "imperfect": "تَتَفَاعَلْنَ",
+        "imperative": "تَفَاعَلْنَ"
+      },
+      "3MS": {
+        "perfect": "تَفَاعَلَ",
+        "imperfect": "يَتَفَاعَلُ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "تَفَاعَلَتْ",
+        "imperfect": "تَتَفَاعَلُ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "تَفَاعَلَا",
+        "imperfect": "يَتَفَاعَلَانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "تَفَاعَلَتَا",
+        "imperfect": "تَتَفَاعَلَانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "تَفَاعَلُوا",
+        "imperfect": "يَتَفَاعَلُونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "تَفَاعَلْنَ",
+        "imperfect": "يَتَفَاعَلْنَ",
+        "imperative": null
+      }
+    },
+    "VII": {
+      "1S": {
+        "perfect": "اِنْفَعَلْتُ",
+        "imperfect": "أَنْفَعِلُ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "اِنْفَعَلْنَا",
+        "imperfect": "نَنْفَعِلُ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "اِنْفَعَلْتَ",
+        "imperfect": "تَنْفَعِلُ",
+        "imperative": "اِنْفَعِلْ"
+      },
+      "2FS": {
+        "perfect": "اِنْفَعَلْتِ",
+        "imperfect": "تَنْفَعِلِينَ",
+        "imperative": "اِنْفَعِلِي"
+      },
+      "2MD": {
+        "perfect": "اِنْفَعَلْتُمَا",
+        "imperfect": "تَنْفَعِلَانِ",
+        "imperative": "اِنْفَعِلَا"
+      },
+      "2FD": {
+        "perfect": "اِنْفَعَلْتُمَا",
+        "imperfect": "تَنْفَعِلَانِ",
+        "imperative": "اِنْفَعِلَا"
+      },
+      "2MP": {
+        "perfect": "اِنْفَعَلْتُم",
+        "imperfect": "تَنْفَعِلُونَ",
+        "imperative": "اِنْفَعِلُوا"
+      },
+      "2FP": {
+        "perfect": "اِنْفَعَلْتُنَّ",
+        "imperfect": "تَنْفَعِلْنَ",
+        "imperative": "اِنْفَعِلْنَ"
+      },
+      "3MS": {
+        "perfect": "اِنْفَعَلَ",
+        "imperfect": "يَنْفَعِلُ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "اِنْفَعَلَتْ",
+        "imperfect": "تَنْفَعِلُ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "اِنْفَعَلَا",
+        "imperfect": "يَنْفَعِلَانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "اِنْفَعَلَتَا",
+        "imperfect": "تَنْفَعِلَانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "اِنْفَعَلُوا",
+        "imperfect": "يَنْفَعِلُونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "اِنْفَعَلْنَ",
+        "imperfect": "يَنْفَعِلْنَ",
+        "imperative": null
+      }
+    },
+    "VIII": {
+      "1S": {
+        "perfect": "اِفْتَعَلْتُ",
+        "imperfect": "أَفْتَعِلُ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "اِفْتَعَلْنَا",
+        "imperfect": "نَفْتَعِلُ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "اِفْتَعَلْتَ",
+        "imperfect": "تَفْتَعِلُ",
+        "imperative": "اِفْتَعِلْ"
+      },
+      "2FS": {
+        "perfect": "اِفْتَعَلْتِ",
+        "imperfect": "تَفْتَعِلِينَ",
+        "imperative": "اِفْتَعِلِي"
+      },
+      "2MD": {
+        "perfect": "اِفْتَعَلْتُمَا",
+        "imperfect": "تَفْتَعِلَانِ",
+        "imperative": "اِفْتَعِلَا"
+      },
+      "2FD": {
+        "perfect": "اِفْتَعَلْتُمَا",
+        "imperfect": "تَفْتَعِلَانِ",
+        "imperative": "اِفْتَعِلَا"
+      },
+      "2MP": {
+        "perfect": "اِفْتَعَلْتُم",
+        "imperfect": "تَفْتَعِلُونَ",
+        "imperative": "اِفْتَعِلُوا"
+      },
+      "2FP": {
+        "perfect": "اِفْتَعَلْتُنَّ",
+        "imperfect": "تَفْتَعِلْنَ",
+        "imperative": "اِفْتَعِلْنَ"
+      },
+      "3MS": {
+        "perfect": "اِفْتَعَلَ",
+        "imperfect": "يَفْتَعِلُ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "اِفْتَعَلَتْ",
+        "imperfect": "تَفْتَعِلُ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "اِفْتَعَلَا",
+        "imperfect": "يَفْتَعِلَانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "اِفْتَعَلَتَا",
+        "imperfect": "تَفْتَعِلَانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "اِفْتَعَلُوا",
+        "imperfect": "يَفْتَعِلُونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "اِفْتَعَلْنَ",
+        "imperfect": "يَفْتَعِلْنَ",
+        "imperative": null
+      }
+    },
+    "IX": {
+      "1S": {
+        "perfect": "اِفْعَلَلْتُ",
+        "imperfect": "أَفْعَلُّ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "اِفْعَلَلْنَا",
+        "imperfect": "نَفْعَلُّ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "اِفْعَلَلْتَ",
+        "imperfect": "تَفْعَلُّ",
+        "imperative": "اِفْعَلِلْ"
+      },
+      "2FS": {
+        "perfect": "اِفْعَلَلْتِ",
+        "imperfect": "تَفْعَلِّينَ",
+        "imperative": "اِفْعَلِّي"
+      },
+      "2MD": {
+        "perfect": "اِفْعَلَلْتُمَا",
+        "imperfect": "تَفْعَلَّانِ",
+        "imperative": "اِفْعَلَّا"
+      },
+      "2FD": {
+        "perfect": "اِفْعَلَلْتُمَا",
+        "imperfect": "تَفْعَلَّانِ",
+        "imperative": "اِفْعَلَّا"
+      },
+      "2MP": {
+        "perfect": "اِفْعَلَلْتُم",
+        "imperfect": "تَفْعَلُّونَ",
+        "imperative": "اِفْعَلُّوا"
+      },
+      "2FP": {
+        "perfect": "اِفْعَلَلْتُنَّ",
+        "imperfect": "تَفْعَلِلْنَ",
+        "imperative": "اِفْعَلِلْنَ"
+      },
+      "3MS": {
+        "perfect": "اِفْعَلَّ",
+        "imperfect": "يَفْعَلُّ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "اِفْعَلَّتْ",
+        "imperfect": "تَفْعَلُّ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "اِفْعَلَّا",
+        "imperfect": "يَفْعَلَّانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "اِفْعَلَّتَا",
+        "imperfect": "تَفْعَلَّانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "اِفْعَلُّوا",
+        "imperfect": "يَفْعَلُّونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "اِفْعَلَلْنَ",
+        "imperfect": "يَفْعَلِلْنَ",
+        "imperative": null
+      }
+    },
+    "X": {
+      "1S": {
+        "perfect": "اِسْتَفْعَلْتُ",
+        "imperfect": "أَسْتَفْعِلُ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "اِسْتَفْعَلْنَا",
+        "imperfect": "نَسْتَفْعِلُ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "اِسْتَفْعَلْتَ",
+        "imperfect": "تَسْتَفْعِلُ",
+        "imperative": "اِسْتَفْعِلْ"
+      },
+      "2FS": {
+        "perfect": "اِسْتَفْعَلْتِ",
+        "imperfect": "تَسْتَفْعِلِينَ",
+        "imperative": "اِسْتَفْعِلِي"
+      },
+      "2MD": {
+        "perfect": "اِسْتَفْعَلْتُمَا",
+        "imperfect": "تَسْتَفْعِلَانِ",
+        "imperative": "اِسْتَفْعِلَا"
+      },
+      "2FD": {
+        "perfect": "اِسْتَفْعَلْتُمَا",
+        "imperfect": "تَسْتَفْعِلَانِ",
+        "imperative": "اِسْتَفْعِلَا"
+      },
+      "2MP": {
+        "perfect": "اِسْتَفْعَلْتُم",
+        "imperfect": "تَسْتَفْعِلُونَ",
+        "imperative": "اِسْتَفْعِلُوا"
+      },
+      "2FP": {
+        "perfect": "اِسْتَفْعَلْتُنَّ",
+        "imperfect": "تَسْتَفْعِلْنَ",
+        "imperative": "اِسْتَفْعِلْنَ"
+      },
+      "3MS": {
+        "perfect": "اِسْتَفْعَلَ",
+        "imperfect": "يَسْتَفْعِلُ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "اِسْتَفْعَلَتْ",
+        "imperfect": "تَسْتَفْعِلُ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "اِسْتَفْعَلَا",
+        "imperfect": "يَسْتَفْعِلَانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "اِسْتَفْعَلَتَا",
+        "imperfect": "تَسْتَفْعِلَانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "اِسْتَفْعَلُوا",
+        "imperfect": "يَسْتَفْعِلُونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "اِسْتَفْعَلْنَ",
+        "imperfect": "يَسْتَفْعِلْنَ",
+        "imperative": null
+      }
+    }
+  },
+  "quadriliteral": {
+    "I": {
+      "1S": {
+        "perfect": "فَعْلَلْتُ",
+        "imperfect": "أُفَعْلِلُ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "فَعْلَلْنَا",
+        "imperfect": "نُفَعْلِلُ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "فَعْلَلْتَ",
+        "imperfect": "تُفَعْلِلُ",
+        "imperative": "فَعْلِلْ"
+      },
+      "2FS": {
+        "perfect": "فَعْلَلْتِ",
+        "imperfect": "تُفَعْلِلِينَ",
+        "imperative": "فَعْلِلِي"
+      },
+      "2MD": {
+        "perfect": "فَعْلَلْتُمَا",
+        "imperfect": "تُفَعْلِلَانِ",
+        "imperative": "فَعْلِلَا"
+      },
+      "2FD": {
+        "perfect": "فَعْلَلْتُمَا",
+        "imperfect": "تُفَعْلِلَانِ",
+        "imperative": "فَعْلِلَا"
+      },
+      "2MP": {
+        "perfect": "فَعْلَلْتُم",
+        "imperfect": "تُفَعْلِلُونَ",
+        "imperative": "فَعْلِلُوا"
+      },
+      "2FP": {
+        "perfect": "فَعْلَلْتُنَّ",
+        "imperfect": "تُفَعْلِلْنَ",
+        "imperative": "فَعْلِلْنَ"
+      },
+      "3MS": {
+        "perfect": "فَعْلَلَ",
+        "imperfect": "يُفَعْلِلُ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "فَعْلَلَتْ",
+        "imperfect": "تُفَعْلِلُ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "فَعْلَلَا",
+        "imperfect": "يُفَعْلِلَانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "فَعْلَلَتَا",
+        "imperfect": "تُفَعْلِلَانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "فَعْلَلُوا",
+        "imperfect": "يُفَعْلِلُونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "فَعْلَلْنَ",
+        "imperfect": "يُفَعْلِلْنَ",
+        "imperative": null
+      }
+    },
+    "II": {
+      "1S": {
+        "perfect": "تَفَعْلَلْتُ",
+        "imperfect": "أَتَفَعْلَلُ",
+        "imperative": null
+      },
+      "1P": {
+        "perfect": "تَفَعْلَلْنَا",
+        "imperfect": "نَتَفَعْلَلُ",
+        "imperative": null
+      },
+      "2MS": {
+        "perfect": "تَفَعْلَلْتَ",
+        "imperfect": "تَتَفَعْلَلُ",
+        "imperative": "تَفَعْلَلْ"
+      },
+      "2FS": {
+        "perfect": "تَفَعْلَلْتِ",
+        "imperfect": "تَتَفَعْلَلِينَ",
+        "imperative": "تَفَعْلَلِي"
+      },
+      "2MD": {
+        "perfect": "تَفَعْلَلْتُمَا",
+        "imperfect": "تَتَفَعْلَلَانِ",
+        "imperative": "تَفَعْلَلَا"
+      },
+      "2FD": {
+        "perfect": "تَفَعْلَلْتُمَا",
+        "imperfect": "تَتَفَعْلَلَانِ",
+        "imperative": "تَفَعْلَلَا"
+      },
+      "2MP": {
+        "perfect": "تَفَعْلَلْتُم",
+        "imperfect": "تَتَفَعْلَلُونَ",
+        "imperative": "تَفَعْلَلُوا"
+      },
+      "2FP": {
+        "perfect": "تَفَعْلَلْتُنَّ",
+        "imperfect": "تَتَفَعْلَلْنَ",
+        "imperative": "تَفَعْلَلْنَ"
+      },
+      "3MS": {
+        "perfect": "تَفَعْلَلَ",
+        "imperfect": "يَتَفَعْلَلُ",
+        "imperative": null
+      },
+      "3FS": {
+        "perfect": "تَفَعْلَلَتْ",
+        "imperfect": "تَتَفَعْلَلُ",
+        "imperative": null
+      },
+      "3MD": {
+        "perfect": "تَفَعْلَلَا",
+        "imperfect": "يَتَفَعْلَلَانِ",
+        "imperative": null
+      },
+      "3FD": {
+        "perfect": "تَفَعْلَلَتَا",
+        "imperfect": "تَتَفَعْلَلَانِ",
+        "imperative": null
+      },
+      "3MP": {
+        "perfect": "تَفَعْلَلُوا",
+        "imperfect": "يَتَفَعْلَلُونَ",
+        "imperative": null
+      },
+      "3FP": {
+        "perfect": "تَفَعْلَلْنَ",
+        "imperfect": "يَتَفَعْلَلْنَ",
+        "imperative": null
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="380" viewBox="0 0 1440 380" role="img" aria-labelledby="title desc">
+<title id="title">Ayah Grammar — Read deeply</title><desc id="desc">A Quran reading and grammar study app with Arabic, Bangla and English, 114 surahs and a 500-verb study library.</desc>
+<rect width="1440" height="380" rx="20" fill="#173b35"/>
+<g fill="none" stroke="#c5a66b" opacity=".13"><path d="M1110 -70 1430 250 1110 570 790 250Z"/><path d="M1110 -5 1365 250 1110 505 855 250Z"/><path d="M855 -5h510v510H855Z"/><circle cx="1110" cy="250" r="180"/><circle cx="1110" cy="250" r="250"/></g>
+<g transform="translate(78 69)" fill="none" stroke="#d6b87c" stroke-width="2"><rect width="30" height="30"/><rect width="30" height="30" transform="rotate(45 15 15)"/><circle cx="15" cy="15" r="6"/></g>
+<text x="132" y="92" fill="#dcc493" font-family="Verdana,sans-serif" font-size="14" letter-spacing="4">READ DEEPLY</text>
+<text x="72" y="181" fill="#fffaf0" font-family="Georgia,serif" font-size="76" letter-spacing="-2">Ayah Grammar</text>
+<text x="76" y="231" fill="#c9d7cc" font-family="Verdana,sans-serif" font-size="22">Learn the words of the Quran, one ayah at a time.</text>
+<path d="M76 267h690" stroke="#6f8978" stroke-width="1"/>
+<text x="76" y="311" fill="#dfcb9e" font-family="Verdana,sans-serif" font-size="14" letter-spacing="1">114 SURAHS</text>
+<text x="265" y="311" fill="#dfcb9e" font-family="Verdana,sans-serif" font-size="14" letter-spacing="1">500 VERBS</text>
+<text x="453" y="311" fill="#dfcb9e" font-family="Verdana,sans-serif" font-size="14" letter-spacing="1">ARABIC · BANGLA · ENGLISH</text>
+<text x="1150" y="232" text-anchor="middle" fill="#e1c68c" font-family="Georgia,serif" font-size="100" opacity=".9">۞</text>
+<text x="1150" y="282" text-anchor="middle" fill="#c9d7cc" font-family="Verdana,sans-serif" font-size="12" letter-spacing="4">READ · EXPLORE · PRACTISE</text>
+</svg>

@@ -1,0 +1,108 @@
+/* A quiet book desk, using the reader's paper, ink and typefaces. */
+.book-library { --book-paper:#fffdf7; --book-wash:#f3f1e8; --book-ink:#214c3e; --book-muted:#718378; --book-line:#dddccd; --book-accent:#b38a47; color:var(--book-ink); background:var(--book-paper); border:1px solid var(--book-line); border-radius:18px; padding:0; width:min(1200px,calc(100vw - 56px)); height:min(900px,calc(100dvh - 56px)); max-width:none; max-height:none; overflow:hidden; box-shadow:0 30px 110px #07291e55; }
+.book-library::backdrop { background:#132f29ad; backdrop-filter:blur(5px); }
+.book-library-header { display:flex; align-items:center; justify-content:space-between; padding:24px 30px 20px; border-bottom:1px solid var(--book-line); }
+.book-library-header h1 { margin:3px 0 0; font:normal 34px/1.2 Georgia,serif; letter-spacing:-.04em; }
+.book-library-header h1 span { font:400 23px 'Hind Siliguri'; margin-left:14px; color:var(--book-muted); letter-spacing:0; }
+.book-library-header .eyebrow { color:var(--book-accent); }
+.book-library-layout { display:grid; grid-template-columns:295px minmax(0,1fr); height:calc(100% - 110px); }
+.book-library-index { min-height:0; display:flex; flex-direction:column; background:var(--book-wash); border-right:1px solid var(--book-line); padding:20px 14px 0; }
+.book-library .search-box { background:var(--book-paper); margin:0 0 12px; border-color:var(--book-line); color:var(--book-muted); }
+.book-library .search-box input { min-width:0; width:100%; color:var(--book-ink); font-family:'Hind Siliguri','Manrope',sans-serif; font-size:15px; }
+.book-filters { display:grid; grid-template-columns:1.2fr 1fr; gap:8px; }
+.book-filters label { display:grid; gap:5px; font-size:10px; font-weight:700; color:var(--book-muted); text-transform:uppercase; letter-spacing:.08em; }
+.book-filters select { min-width:0; padding:9px 5px; color:var(--book-ink); border:1px solid var(--book-line); border-radius:7px; background:var(--book-paper); font:500 11px 'Manrope'; }
+.book-result-count { font-size:10px; color:var(--book-muted); padding:16px 5px 10px; }
+.book-result-list { overflow:auto; min-height:0; padding:0 2px 20px; overscroll-behavior:contain; }
+.book-result { width:100%; display:grid; grid-template-columns:31px 1fr; gap:0 9px; text-align:left; background:transparent; border:1px solid transparent; border-bottom-color:var(--book-line); border-radius:8px; padding:10px 9px; color:var(--book-ink); }
+.book-result .book-entry-number { grid-row:1/4; padding-top:8px; font-size:10px; font-variant-numeric:tabular-nums; color:var(--book-muted); }
+.book-result strong { font:500 29px/1.25 'Noto Naskh Arabic'; text-align:left; }
+.book-result span[lang=bn] { font:400 15px/1.6 'Hind Siliguri'; }
+.book-result small { font-size:9px; color:var(--book-muted); margin-top:3px; }
+.book-result:hover { background:var(--book-paper); }
+.book-result.selected { background:#e6eee2; border-color:#bdd1b9; }
+.book-no-results { padding:24px 8px; color:var(--book-muted); font-size:13px; }
+.book-library-study { min-width:0; min-height:0; overflow:auto; padding:30px 32px; overscroll-behavior:contain; }
+.book-entry-heading { display:flex; justify-content:space-between; align-items:center; gap:18px; padding-bottom:24px; border-bottom:1px solid var(--book-line); }
+.book-entry-heading h2 { font:500 calc(29px * var(--font-scale,1))/1.6 'Hind Siliguri'; margin:9px 0 0; color:var(--book-ink); }
+.book-entry-heading p { margin:4px 0 0; color:var(--book-muted); font-size:11px; display:flex; align-items:center; gap:10px; }
+.book-entry-heading p span[lang=ar] { font:400 23px/1.1 'Noto Naskh Arabic'; color:var(--book-ink); }
+.book-headword { font:400 calc(63px * var(--font-scale,1))/1.5 'Noto Naskh Arabic'; color:var(--book-ink); flex-shrink:0; }
+.book-study-toolbar { display:flex; justify-content:space-between; align-items:center; padding:20px 0 18px; gap:12px; }
+.book-study-toolbar>span { color:var(--book-muted); font:italic 17px Georgia,serif; }
+.book-source-line { display:flex; justify-content:space-between; gap:12px; align-items:center; padding:10px 0; font-size:10px; font-weight:700; color:#7d8b79; }
+.book-source-line>span { letter-spacing:.12em; }
+.book-source-line>span>span { color:#baa775; margin:0 5px; }
+.book-source-line a { display:inline-flex; align-items:center; gap:5px; color:#40735a; font-size:11px; font-weight:500; text-decoration:none; }
+.book-chart-scroll { border:1px solid #d9dfd0; border-radius:10px; background:#fffef9; }
+.book-chart { border:0; border-collapse:collapse; min-width:540px; }
+.book-chart thead th { background:#eef2e8; color:#496c56; font-size:calc(11px * var(--font-scale,1)); padding:12px 7px; text-align:center; }
+.book-chart thead th:first-child { text-align:left; padding-left:12px; width:92px; }
+.book-chart tbody th { width:92px; padding:11px 12px; background:#f8f8f0; }
+.book-chart th small { display:block; font:400 calc(12px * var(--font-scale,1))/1.6 'Hind Siliguri'; }
+.book-tense-ar { display:block; font:400 18px/1.2 'Noto Naskh Arabic'; margin-top:5px; color:#82937a; }
+.book-cell { padding:12px 9px; text-align:center; vertical-align:middle; }
+.book-cell .conjugated-arabic { display:block; font:400 calc(30px * var(--font-scale,1))/1.65 'Noto Naskh Arabic'; color:#244e3e; }
+.book-cell .book-verb-meaning { display:block; font:400 calc(15px * var(--font-scale,1))/1.5 'Hind Siliguri'; color:#4e6857; overflow-wrap:anywhere; }
+.book-cell sup { color:#a67530; margin-left:2px; }
+.book-hidden-meaning { display:block; color:#bac4b4; font-size:12px; letter-spacing:5px; line-height:22px; }
+.book-cell.review-cell { background:#faf0dc; }
+.book-review-link { display:block; font-size:9px; color:#916525; margin-top:4px; }
+.book-chart-note { line-height:1.8; font-size:11px; }
+.book-chart-note>span[lang=bn] { display:block; font:400 14px/1.7 'Hind Siliguri'; margin-top:4px; }
+.book-exception { padding:15px; background:#f4eedf; color:#735d35; border-radius:8px; font:400 17px/1.7 'Hind Siliguri'; }
+.book-source-details { color:#7c8a7b; font-size:11px; line-height:1.8; margin-top:12px; }
+.book-source-details summary { cursor:pointer; }
+.book-source-details p { margin:8px 0; }
+.book-source-details li[lang=bn] { font-family:'Hind Siliguri'; font-size:14px; }
+.book-pagination { display:flex; justify-content:space-between; gap:12px; align-items:center; border-top:1px solid var(--book-line); margin-top:24px; padding-top:18px; }
+.book-pagination>span { text-align:center; font-size:10px; color:var(--book-muted); }
+.book-pagination button:disabled { opacity:.4; cursor:default; }
+.book-reading-options { display:flex; flex-wrap:wrap; gap:8px; padding-top:18px; }
+.book-reading-options>span { width:100%; font-size:11px; color:var(--book-muted); }
+.book-reading-options button { border:1px solid var(--book-line); padding:6px 10px; border-radius:7px; background:var(--book-paper); color:var(--book-ink); font:400 15px 'Hind Siliguri'; }
+.book-reading-options button.selected { background:var(--book-ink); color:var(--book-paper); }
+.book-view-toggle { margin:12px 0; }
+.book-chart-section { min-width:0; }
+.book-library :focus-visible,.book-chart-scroll:focus-visible { outline:2px solid #b78943; outline-offset:3px; }
+@media(max-width:760px) {
+  .book-library { width:100%; height:100dvh; border:0; border-radius:0; }
+  .book-library-header { padding:15px 18px; }
+  .book-library-header h1 { font-size:27px; }
+  .book-library-header h1 span { font-size:19px; }
+  .book-library-layout { height:calc(100% - 86px); grid-template-columns:minmax(0,1fr); grid-template-rows:224px minmax(0,1fr); }
+  .book-library-index { padding:12px 14px 0; border-right:0; border-bottom:1px solid var(--book-line); }
+  .book-library-index .search-box { margin-bottom:8px; }
+  .book-filters { grid-template-columns:1fr 1fr; }
+  .book-filters label { display:flex; align-items:center; gap:7px; }
+  .book-filters select { flex:1; padding:5px; }
+  .book-result-count { padding:6px 0 4px; }
+  .book-result-list { display:flex; flex:1; overflow-x:auto; overflow-y:hidden; padding-bottom:9px; gap:7px; }
+  .book-result { flex:0 0 190px; padding:6px; grid-template-columns:24px 1fr; background:var(--book-paper); border-color:var(--book-line); }
+  .book-result strong { font-size:24px; }
+  .book-result span[lang=bn] { font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .book-result small { font-size:8px; }
+  .book-no-results { padding:0; display:flex; gap:12px; align-items:center; }
+  .book-library-study { padding:20px 15px; }
+  .book-entry-heading { padding-bottom:14px; }
+  .book-entry-heading h2 { font-size:calc(23px * var(--font-scale,1)); }
+  .book-headword { font-size:calc(46px * var(--font-scale,1)); }
+  .book-study-toolbar { padding:14px 0 8px; }
+  .book-study-toolbar>span { font-size:15px; }
+  .book-chart { min-width:520px; }
+  .book-source-line { font-size:9px; }
+  .book-source-line a { font-size:10px; }
+}
+html[data-theme=dark] .book-library { --book-paper:#1b2b25; --book-wash:#17251f; --book-ink:#dbe6cd; --book-muted:#9caa95; --book-line:#35483b; --book-accent:#d5b578; }
+html[data-theme=dark] .book-result.selected { background:#304735; border-color:#728461; }
+html[data-theme=dark] .book-chart-scroll { background:#1c2c24; border-color:#3e503e; }
+html[data-theme=dark] .book-chart thead th { background:#2a3e2d; color:#c2d6b5; }
+html[data-theme=dark] .book-chart tbody th { background:#223328; }
+html[data-theme=dark] .book-cell .conjugated-arabic { color:#e5e9d5; }
+html[data-theme=dark] .book-cell .book-verb-meaning { color:#b9cbb2; }
+html[data-theme=dark] .book-source-line,html[data-theme=dark] .book-source-details { color:#a6b49d; }
+html[data-theme=dark] .book-source-line a { color:#b8cf96; }
+html[data-theme=dark] .book-cell.review-cell,html[data-theme=dark] .book-exception { background:#403821; color:#ddc991; }
+html[data-theme=dark] .book-review-link { color:#dbb971; }
+
+.book-library .action-button { flex:0 0 auto; }
