@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react'
-import { BookOpen, Bookmark, ChevronDown, ChevronLeft, ChevronRight, Highlighter, Menu, Search, Settings2, X } from 'lucide-react'
+import { BookOpen, Bookmark, ChevronDown, ChevronLeft, ChevronRight, Highlighter, Search, Settings2, X } from 'lucide-react'
 import DeferredFeature from './DeferredFeature'
 import { deferModule } from './deferredModule'
 import { useJsonData } from './useJsonData'
@@ -50,6 +50,8 @@ export default function App() {
   const [prefersDark, setPrefersDark] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches)
   const [surahMenu, setSurahMenu] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => localStorage.getItem('ayah-sidebar-collapsed') === 'true')
+  const [desktopSidebar, setDesktopSidebar] = useState(() => window.matchMedia('(min-width: 1351px)').matches)
+  const chaptersOpen = desktopSidebar ? !sidebarCollapsed : surahMenu
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [savedOpen, setSavedOpen] = useState(false)
   const [libraryOpen, setLibraryOpen] = useState(false)
@@ -58,6 +60,26 @@ export default function App() {
   const [target, setTarget] = useState<{ key: string; position: number } | null>(null)
   const studyRef = useRef<HTMLDivElement>(null)
   const workspaceRef = useRef<HTMLDivElement>(null)
+  const chapterToggleRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 1351px)')
+    const update = (event: MediaQueryListEvent) => { setDesktopSidebar(event.matches); setSurahMenu(false) }
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [])
+
+  useEffect(() => {
+    if (!chaptersOpen) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || settingsOpen || savedOpen || libraryOpen || selection) return
+      if (desktopSidebar) setSidebarCollapsed(true)
+      else setSurahMenu(false)
+      chapterToggleRef.current?.focus()
+    }
+    window.addEventListener('keydown', closeOnEscape)
+    return () => window.removeEventListener('keydown', closeOnEscape)
+  }, [chaptersOpen, desktopSidebar, settingsOpen, savedOpen, libraryOpen, selection])
 
   useEffect(() => { localStorage.setItem('ayah-chapter', String(chapterNumber)) }, [chapterNumber])
 
@@ -103,6 +125,8 @@ export default function App() {
     }
     const observer = new ResizeObserver(update)
     observer.observe(workspace)
+    const sidebar = workspace.querySelector('.chapter-sidebar')
+    if (sidebar) observer.observe(sidebar)
     update()
     return () => observer.disconnect()
   }, [sidebarCollapsed])
@@ -152,7 +176,7 @@ export default function App() {
       : [...current, { id: selectedId, arabic: selection.word.arabic, en: selection.word.en, bn: selection.word.bn }])
   }
   const toggleChapters = () => {
-    if (window.matchMedia('(min-width: 1351px)').matches) setSidebarCollapsed(value => !value)
+    if (desktopSidebar) setSidebarCollapsed(value => !value)
     else setSurahMenu(value => !value)
   }
   const startResize = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -193,7 +217,6 @@ export default function App() {
         <button className={highlightVerbs ? 'top-button active' : 'top-button'} onClick={() => setHighlightVerbs(value => !value)} aria-pressed={highlightVerbs}><Highlighter size={17} /><span>Verbs</span></button>
         <button className="top-button" onClick={() => { setSavedOpen(value => !value); setSettingsOpen(false) }} aria-expanded={savedOpen} aria-label={`Saved words, ${savedWords.length}`}><Bookmark size={17} /><span>Saved {savedWords.length || ''}</span></button>
         <button className="top-button settings-trigger" onClick={() => { setSettingsOpen(value => !value); setSavedOpen(false) }} aria-expanded={settingsOpen} aria-label="Display settings"><Settings2 size={18} /><span>Display</span></button>
-        <button className="top-button menu-trigger" onClick={toggleChapters} aria-label="Toggle chapters"><Menu size={20} /></button>
       </nav>
       {settingsOpen && <div className="settings-popover">
         <div className="popover-head"><strong>Reading display</strong><button className="icon-button" aria-label="Close display settings" onClick={() => setSettingsOpen(false)}><X size={17} /></button></div>
@@ -218,9 +241,9 @@ export default function App() {
     {libraryOpen && <DeferredFeature load={loadVerbLibrary} componentProps={{ onClose: () => setLibraryOpen(false) }} label="Verb library" onClose={() => setLibraryOpen(false)} modal />}
 
     <div ref={workspaceRef} className={`workspace ${selection ? 'is-studying' : ''} ${sidebarCollapsed ? 'sidebar-collapsed' : ''} ${surahMenu ? 'surah-open' : ''} ${resizing ? 'is-resizing' : ''}`} style={{ '--reader-fr': `${readerShare * 100}fr`, '--panel-fr': `${(1 - readerShare) * 100}fr` } as CSSProperties}>
-      <button className="surah-rail-toggle" onClick={toggleChapters} aria-label="Toggle Surah list" title="Toggle Surah list"><Menu size={18} /></button>
-      <aside className={surahMenu ? 'chapter-sidebar open' : 'chapter-sidebar'} aria-label="Chapter navigation">
-        <div className="sidebar-head"><div><span className="eyebrow">EXPLORE THE QURAN</span><h2>Surahs</h2></div><button className="icon-button sidebar-collapse" onClick={() => setSidebarCollapsed(true)} aria-label="Collapse chapter sidebar"><ChevronLeft size={20} /></button><button className="icon-button sidebar-close" onClick={() => setSurahMenu(false)} aria-label="Close chapters"><X size={20} /></button></div>
+      <button ref={chapterToggleRef} className="surah-rail-toggle" onClick={toggleChapters} aria-controls="chapter-navigation" aria-expanded={chaptersOpen} aria-label={chaptersOpen ? 'Close surah sidebar' : 'Open surah sidebar'} title={chaptersOpen ? 'Close surah sidebar' : 'Open surah sidebar'}><ChevronLeft size={20} aria-hidden="true" /></button>
+      <aside id="chapter-navigation" className={surahMenu ? 'chapter-sidebar open' : 'chapter-sidebar'} aria-label="Chapter navigation" aria-hidden={!chaptersOpen} inert={!chaptersOpen}>
+        <div className="sidebar-head"><div><span className="eyebrow">EXPLORE THE QURAN</span><h2>Surahs</h2></div></div>
         <label className="search-box"><Search size={17} /><input value={search} onChange={event => setSearch(event.target.value)} placeholder="Find a surah" aria-label="Find a surah" /></label>
         <div className="chapter-list">{filteredChapters.map(item => <button key={item.number} onClick={() => selectChapter(item.number)} className={item.number === chapterNumber ? 'chapter-item current' : 'chapter-item'}><span className="chapter-index">{String(item.number).padStart(2, '0')}</span><span className="chapter-names"><strong>{item.english}</strong><small>{item.meaning} · {item.ayahs} ayahs</small></span><span className="chapter-arabic" lang="ar">{item.arabic}</span></button>)}</div>
         <div className="sidebar-footer"><BookOpen size={16} /> <span>Every word has a place to explore.</span></div>
