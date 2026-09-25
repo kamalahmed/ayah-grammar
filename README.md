@@ -8,6 +8,7 @@
 </p>
 
 <p align="center">
+  <a href="https://ayah.kamalahmed.me/">Open Ayah Grammar</a> ·
   <a href="#a-look-inside">Screenshots</a> ·
   <a href="#what-you-can-do">Features</a> ·
   <a href="#run-it-locally">Get started</a> ·

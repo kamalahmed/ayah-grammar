@@ -2,6 +2,10 @@
 
 Ayah Grammar runs as a static website. The production build contains the Quran chapters and study data needed by the application; it does not need a running Node.js, Python, MySQL, or SQLite server.
 
+Live site: [ayah.kamalahmed.me](https://ayah.kamalahmed.me/), hosted on Hostinger with HTTPS. The initial production release is `eb430fe`, published September 25, 2026. Its document root is the `public_html/ayah` folder beneath the `kamalahmed.me` hosting domain.
+
+All 1,091 deployed files were verified against the build using SHA-256. Live browser checks confirmed selected-surah loading, all 286 Al-Baqara ayahs, word-study charts, library search and alternate readings, and a 390-pixel mobile layout. Hostinger serves text with Brotli compression, immutable caching for hashed assets, and revalidation for chapter data. Offline behavior was verified separately against the local production preview.
+
 ## Build and verify
 
 ```sh
