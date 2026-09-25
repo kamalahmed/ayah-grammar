@@ -33,6 +33,8 @@ The collection contains 500 numbered entries, 501 readings and 6,978 conjugation
 
 This optional step requires your own copies of the source books. The defaults look for `public/books/level-1.pdf` and `public/books/level-2.pdf` locally; both are ignored by Git. Set `QURAN_BOOK_DIR` to use another local folder.
 
+`npm run dev` enables original-page links only for the local PDFs found when the server starts. `npm run build` excludes `books/` from the output and renders source-page citations without PDF download links. Deploy the generated `dist/` directory.
+
 The books' embedded Unicode maps are inconsistent with their rendered glyphs. The extraction scripts use a reviewed glyph map, table geometry, Bengali character reordering and Tesseract OCR for Level 2 entry numbers. Corrections and known questionable printed forms are recorded in the master export.
 
 ```bash

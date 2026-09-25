@@ -86,6 +86,8 @@ I use my purchased copies of **Quran words, Levels 1 and 2** as references for t
 
 The app's vocabulary and conjugation datasets are included, so you can use the reader and study charts without the PDFs. Source-page references acknowledge the books and support checking a form against your own copy.
 
+For personal study, local copies can be placed in the ignored `public/books/` folder. Development mode can open those pages when the files are present. Production builds exclude that folder and show page citations, so publishing the app does not publish the books.
+
 ## Run it locally
 
 **Requirements:** Node.js 20.19+ or 22.12+, npm, and Python 3 for the data checks.
