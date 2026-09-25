@@ -65,7 +65,8 @@ Bangla is central to the experience, alongside English. My focus is a calm readi
 - **Resizable desktop panels** and a collapsible surah sidebar.
 - **A mobile study sheet** with charts that scroll inside the panel.
 - **Saved words** and reading preferences stored in your browser.
-- **Installable PWA** with cached app assets and previously opened content available offline. Chapters are cached as you open them; the entire Quran is not pre-downloaded.
+- **Installable PWA** with cached app assets and previously opened content available offline. Chapters are loaded and cached as you select them; the entire Quran is not pre-downloaded.
+- **On-demand study tools:** word study and the verb library load when opened. Verb study fetches only the selected root's examples and charts.
 - **No account, API key or application backend** required.
 
 ### Three ways to study a verb
@@ -134,7 +135,9 @@ flowchart LR
 | Persistence | Browser local storage and a service worker cache |
 | Verification | Vitest and Python `unittest` |
 
-Each word is identified by **surah, ayah and word position**. Chapters load on demand, and the verb occurrence index loads when verb study is first opened. Book meanings are matched by root, form, voice, aspect, person and Arabic spelling before being attached to a generated chart.
+Each word is identified by **surah, ayah and word position**. Chapters load on demand, recent chapters are reused in memory, and changing chapters cancels obsolete requests. The build splits verb study data into content-hashed files by root. The reader loads the study panel, the selected root's data, and the 500-verb library only when each is needed. Book meanings are matched by root, form, voice, aspect, person and Arabic spelling before being attached to a generated chart.
+
+For publishing the production build on a subdomain, see [Static hosting and deployment](docs/DEPLOYMENT.md).
 
 ### Repository guide
 
