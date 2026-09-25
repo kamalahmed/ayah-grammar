@@ -163,3 +163,7 @@
   .reading-location{top:64px;margin:-22px -4px 10px;padding:7px 8px}
   .reading-location-ayah{font-size:calc(9px * var(--font-scale, 1))}
 }
+
+/* Keep every ayah searchable and linkable while skipping offscreen layout work. */
+.verse { content-visibility:auto; contain-intrinsic-size:auto 560px; }
+@media print { .verse { content-visibility:visible; contain-intrinsic-size:none; } }

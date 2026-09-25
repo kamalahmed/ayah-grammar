@@ -3,16 +3,17 @@ import type { PointerEvent as ReactPointerEvent } from 'react'
 import { ArrowLeft, Bookmark, BookOpen, CircleHelp, ExternalLink, X } from 'lucide-react'
 import { arabicRoot, aspectLabels, attestedChart, chartSlotApplies, personLabels, personOrder, posLabels, pronounLabels, verbFormNumber, verbFormPattern } from './study'
 import { quadriliteralGuide, triliteralGuide, verbFormsSource } from './formGuide'
-import { referenceParadigm, selectedVerbParadigm } from './paradigms'
-import { bookVerbMeaning } from './bookVerbMeanings'
-import { bookCell, findBookVerb } from './bookVerbs'
+import { referenceParadigm } from './referenceParadigm'
+import verbUrls from 'virtual:verb-data'
+import { studyCache, useJsonData } from './useJsonData'
+import type { VerbStudyData } from '../build/verbShards'
+import { bookCell, findBookReading, meaningForBookReading } from './bookData'
 import BookChart from './BookChart'
-import type { VerbOccurrence, Word } from './types'
+import type { Word } from './types'
 
 interface Props {
   word: Word
   verseKey: string
-  occurrences: VerbOccurrence[] | null
   saved: boolean
   onSave: () => void
   onClose: () => void
@@ -30,11 +31,13 @@ const aspects = ['PERF', 'IMPF', 'IMPV']
 const formOrder = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII']
 const referencePersons = personOrder.filter(person => person !== '2D')
 
-export default function WordPanel({ word, verseKey, occurrences, saved, onSave, onClose, onNavigate, onResizeStart, onResizeKeyboard, readerShare, minReaderShare, maxReaderShare, showVerbBn, showVerbEn }: Props) {
+export default function WordPanel({ word, verseKey, saved, onSave, onClose, onNavigate, onResizeStart, onResizeKeyboard, readerShare, minReaderShare, maxReaderShare, showVerbBn, showVerbEn }: Props) {
   const [tab, setTab] = useState<'chart' | 'paradigm' | 'selected' | 'occurrences'>('chart')
   const [showAll, setShowAll] = useState(false)
   const [showAllArabic, setShowAllArabic] = useState(false)
   const isVerb = word.pos === 'V'
+  const study = useJsonData<VerbStudyData>(isVerb && word.root ? verbUrls[word.root] || null : null, studyCache)
+  const occurrences = study.data?.occurrences ?? null
   const form = word.form || 'I'
   const [selectedForm, setSelectedForm] = useState(form)
   const voice = word.voice || 'ACT'
@@ -52,11 +55,13 @@ export default function WordPanel({ word, verseKey, occurrences, saved, onSave, 
   const isTriliteral = word.root?.length === 3
   const formGuide = isTriliteral ? triliteralGuide : quadriliteralGuide
   const paradigm = referenceParadigm(selectedForm, word.root?.length || 0)
-  const selectedParadigm = selectedVerbParadigm(word.root, selectedForm, selectedVoice)
-  const bookVerb = findBookVerb(word.root, selectedForm, selectedVoice, selectedParadigm?.['3MS'].perfect)
+  const selectedParadigm = study.data?.paradigms[selectedForm]?.[selectedVoice] ?? null
+  const books = study.data?.books ?? []
+  const bookVerb = findBookReading(books, word.root, selectedForm, selectedVoice, selectedParadigm?.['3MS'].perfect)
+  const meaningVerb = findBookReading(books, word.root, selectedForm, selectedVoice)
   const selectedCell = (person: string, aspect: 'PERF' | 'IMPF' | 'IMPV') => {
     const arabic = aspect === 'PERF' ? selectedParadigm?.[person]?.perfect : aspect === 'IMPF' ? selectedParadigm?.[person]?.imperfect : selectedParadigm?.[person]?.imperative
-    const bangla = showVerbBn && bookVerbMeaning(word.root, selectedForm, selectedVoice, aspect, person, arabic)
+    const bangla = showVerbBn && meaningForBookReading(meaningVerb, aspect, person, arabic)
     return <td key={aspect} className="selected-paradigm-cell"><span className="conjugated-arabic" lang="ar" dir="rtl">{arabic || '—'}</span>{bangla && <span className="book-verb-meaning" lang="bn" title="Bangla conjugation meaning from the supplied verb list">{bangla}</span>}</td>
   }
 
@@ -99,7 +104,9 @@ export default function WordPanel({ word, verseKey, occurrences, saved, onSave, 
         <details className="source-tags"><summary>See original morphology tags</summary><div>{word.segments.map((segment, i) => <code key={i}>{segment.features}</code>)}</div></details>
       </section>}
 
-      {isVerb && word.root && <section className="verb-section">
+      {isVerb && word.root && study.loading && <p className="loading-message" role="status">Loading this verb’s examples and conjugations…</p>}
+      {isVerb && word.root && study.error && <div className="load-error" role="alert"><p>This verb’s study data could not load. Word meanings remain available.</p><button className="action-button" onClick={study.retry}>Try again</button></div>}
+      {isVerb && word.root && study.data && <section className="verb-section">
         <div className="section-title"><span className="section-number">01</span> Explore this verb</div>
         <div className="form-identity">
           <div><span>SELECTED VERB FORM</span><strong>Form {selectedForm}{selectedNumber ? ` · ${selectedNumber}` : ''}</strong><small>{selectedVoice === 'PASS' ? 'Passive examples' : 'Active examples'}</small></div>

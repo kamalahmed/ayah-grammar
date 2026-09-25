@@ -1,11 +1,17 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react'
 import { BookOpen, Bookmark, ChevronDown, ChevronLeft, ChevronRight, Highlighter, Menu, Search, Settings2, X } from 'lucide-react'
-import WordPanel from './WordPanel'
-import VerbLibrary from './VerbLibrary'
-import type { Chapter, VerbIndex, Verse, Word } from './types'
+import DeferredFeature from './DeferredFeature'
+import { deferModule } from './deferredModule'
+import { useJsonData } from './useJsonData'
+import VerseCard from './VerseCard'
+
+import type { Chapter, Verse, Word } from './types'
 import { readThemePreference, resolveTheme } from './theme'
 import { clampReaderShare, readFontScale, readReaderShare, readerShareBounds } from './displayPreferences'
+
+const loadWordPanel = deferModule(() => import('./WordPanel'))
+const loadVerbLibrary = deferModule(() => import('./VerbLibrary'))
 
 type LanguageMode = 'both' | 'bn' | 'en'
 type Selection = { key: string; word: Word }
@@ -24,11 +30,12 @@ function storedChapter(): number {
 }
 
 export default function App() {
-  const [chapters, setChapters] = useState<Chapter[]>([])
   const [chapterNumber, setChapterNumber] = useState(storedChapter)
-  const [verses, setVerses] = useState<Verse[]>([])
+  const chapterList = useJsonData<Chapter[]>('/data/chapters.json')
+  const chapterData = useJsonData<Verse[]>(`/data/chapter-${chapterNumber}.json`)
+  const chapters = chapterList.data ?? []
+  const verses = chapterData.data ?? []
   const [selection, setSelection] = useState<Selection | null>(null)
-  const [verbIndex, setVerbIndex] = useState<VerbIndex | null>(null)
   const [language, setLanguage] = useState<LanguageMode>(() => (localStorage.getItem('ayah-language') as LanguageMode) || 'both')
   const [highlightVerbs, setHighlightVerbs] = useState(() => localStorage.getItem('ayah-highlight') !== 'false')
   const [showWordMeanings, setShowWordMeanings] = useState(() => localStorage.getItem('ayah-word-meanings') !== 'false')
@@ -47,38 +54,12 @@ export default function App() {
   const [savedOpen, setSavedOpen] = useState(false)
   const [libraryOpen, setLibraryOpen] = useState(false)
   const [search, setSearch] = useState('')
-  const [loadError, setLoadError] = useState('')
   const [savedWords, setSavedWords] = useState<SavedEntry[]>(storedSaved)
   const [target, setTarget] = useState<{ key: string; position: number } | null>(null)
   const studyRef = useRef<HTMLDivElement>(null)
   const workspaceRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    fetch('/data/chapters.json').then(response => {
-      if (!response.ok) throw new Error('Chapter list unavailable')
-      return response.json()
-    }).then(setChapters).catch(() => setLoadError('Could not load the chapter list. Please reconnect and try again.'))
-  }, [])
-
-  useEffect(() => {
-    let active = true
-    setVerses([])
-    setLoadError('')
-    fetch(`/data/chapter-${chapterNumber}.json`).then(response => {
-      if (!response.ok) throw new Error('Chapter unavailable')
-      return response.json()
-    }).then((data: Verse[]) => { if (active) setVerses(data) }).catch(() => { if (active) setLoadError('This chapter is not available yet. Please reconnect and try again.') })
-    localStorage.setItem('ayah-chapter', String(chapterNumber))
-    return () => { active = false }
-  }, [chapterNumber])
-
-  useEffect(() => {
-    if (!selection || selection.word.pos !== 'V' || verbIndex) return
-    fetch('/data/verbs.json').then(response => {
-      if (!response.ok) throw new Error('Verb index unavailable')
-      return response.json()
-    }).then(setVerbIndex).catch(() => setLoadError('The verb index could not load. Word meanings remain available.'))
-  }, [selection, verbIndex])
+  useEffect(() => { localStorage.setItem('ayah-chapter', String(chapterNumber)) }, [chapterNumber])
 
   useEffect(() => {
     if (!target || !verses.length) return
@@ -155,7 +136,7 @@ export default function App() {
   const filteredChapters = useMemo(() => chapters.filter(item => `${item.number} ${item.english} ${item.meaning} ${item.arabic}`.toLowerCase().includes(search.toLowerCase())), [chapters, search])
   const selectedId = selection && `${selection.key}:${selection.word.position}`
   const isSaved = !!selectedId && savedWords.some(item => item.id === selectedId)
-  const selectWord = (key: string, word: Word) => { setSelection({ key, word }); setVisibleVerseKey(key) }
+  const selectWord = useCallback((key: string, word: Word) => { setSelection({ key, word }); setVisibleVerseKey(key) }, [])
   const selectChapter = (number: number) => { setChapterNumber(number); setVisibleVerseKey(`${number}:1`); setSurahMenu(false); setSelection(null); window.scrollTo({ top: 0, behavior: 'smooth' }) }
   const navigate = (key: string, position: number) => {
     const number = Number(key.split(':')[0])
@@ -234,7 +215,7 @@ export default function App() {
       </div>}
     </header>
 
-    {libraryOpen && <VerbLibrary onClose={() => setLibraryOpen(false)} />}
+    {libraryOpen && <DeferredFeature load={loadVerbLibrary} componentProps={{ onClose: () => setLibraryOpen(false) }} label="Verb library" onClose={() => setLibraryOpen(false)} modal />}
 
     <div ref={workspaceRef} className={`workspace ${selection ? 'is-studying' : ''} ${sidebarCollapsed ? 'sidebar-collapsed' : ''} ${surahMenu ? 'surah-open' : ''} ${resizing ? 'is-resizing' : ''}`} style={{ '--reader-fr': `${readerShare * 100}fr`, '--panel-fr': `${(1 - readerShare) * 100}fr` } as CSSProperties}>
       <button className="surah-rail-toggle" onClick={toggleChapters} aria-label="Toggle Surah list" title="Toggle Surah list"><Menu size={18} /></button>
@@ -253,22 +234,18 @@ export default function App() {
           <div className="title-row"><div><span className="chapter-kicker">CHAPTER {String(chapterNumber).padStart(2, '0')}</span><h1>{chapter?.english || 'Loading…'}</h1><p>{chapter?.meaning || 'A word-by-word grammar journey'} <span className="title-dot">·</span> {chapter?.ayahs || '—'} ayahs</p></div><div className="title-arabic" lang="ar" dir="rtl">{chapter?.arabic || 'القرآن'}</div></div>
           <div className="reader-toolbar"><button className="chapter-picker" onClick={openChapters}><BookOpen size={18} /> Choose surah <ChevronDown size={16} /></button><div className="toolbar-note"><span className="verb-key" /> {highlightVerbs ? 'Verb highlighted' : 'Tap any word to study'}</div></div>
         </div>
-        {loadError && <div className="load-error" role="alert">{loadError}</div>}
-        {!verses.length && !loadError && <div className="loading-message">Opening the chapter…</div>}
+        {chapterList.error && <div className="load-error" role="alert"><p>Could not load the chapter list. Reconnect and try again.</p><button className="action-button" onClick={chapterList.retry}>Retry chapter list</button></div>}
+        {chapterData.error && <div className="load-error" role="alert"><p>This chapter could not load. Reconnect and try again.</p><button className="action-button" onClick={chapterData.retry}>Retry chapter</button></div>}
+        {chapterData.loading && <div className="loading-message" role="status">Opening the chapter…</div>}
         {verses.length > 0 && <div className="verses">
           {verses[0].opening && <div className="basmalah" lang="ar" dir="rtl">{verses[0].opening}</div>}
-          {verses.map((verse, index) => <article id={`ayah-${verse.key}`} className={selection?.key === verse.key ? 'verse active-verse' : 'verse'} key={verse.key}>
-            <div className="verse-top"><span className="verse-number">{String(index + 1).padStart(2, '0')}</span><span className="verse-reference">{verse.key}</span></div>
-            <div className="arabic-verse" lang="ar" dir="rtl">{verse.parts.map((part, i) => <span key={i}>{part.word ? <button lang="ar" className={`arabic-word ${highlightVerbs && verse.words[part.word - 1]?.pos === 'V' ? 'is-verb' : ''} ${selection?.key === verse.key && selection.word.position === part.word ? 'is-selected' : ''}`} onClick={() => selectWord(verse.key, verse.words[part.word! - 1])} aria-label={`Study ${part.text}, word ${part.word}`}>{part.text}</button> : <span className="pause-mark">{part.text}</span>}{i < verse.parts.length - 1 ? ' ' : ''}</span>)}</div>
-            {showWordMeanings && <div className="word-glosses" dir="rtl">{verse.words.map(word => <button className={selection?.key === verse.key && selection.word.position === word.position ? 'gloss selected' : 'gloss'} key={word.position} onClick={() => selectWord(verse.key, word)}><span className="gloss-arabic" lang="ar">{word.arabic}</span>{language !== 'en' && <span className="gloss-bn" lang="bn">{word.bn}</span>}{language !== 'bn' && <span className="gloss-en" lang="en">{word.en}</span>}</button>)}</div>}
-            <div className="ayah-translations">{language !== 'en' && <p lang="bn" className="ayah-bn"><span className="translation-label">বাংলা</span>{verse.bn}</p>}{language !== 'bn' && <p className="ayah-en"><span className="translation-label">ENGLISH</span>{verse.en}</p>}</div>
-          </article>)}
+          {verses.map((verse, index) => <VerseCard key={verse.key} verse={verse} index={index} selectedPosition={selection?.key === verse.key ? selection.word.position : undefined} highlightVerbs={highlightVerbs} showWordMeanings={showWordMeanings} language={language} onSelect={selectWord} />)}
         </div>}
         <div className="chapter-pagination"><button disabled={chapterNumber <= 1} onClick={() => selectChapter(chapterNumber - 1)}><ChevronLeft size={17} /> Previous surah</button><button disabled={chapterNumber >= 114} onClick={() => selectChapter(chapterNumber + 1)}>Next surah <ChevronRight size={17} /></button></div>
         <footer className="reader-footer">Quran text: Tanzil · Verse translations: Saheeh International and Muhiuddin Khan · Grammar: Quranic Arabic Corpus · Word meanings: GTAF. <a href="/sources.html">Sources & credits</a></footer>
       </main>
 
-      {selection && <WordPanel key={`${selection.key}:${selection.word.position}`} verseKey={selection.key} word={selection.word} occurrences={selection.word.root ? verbIndex?.[selection.word.root] || null : null} saved={isSaved} onSave={toggleSave} onClose={() => setSelection(null)} onNavigate={navigate} onResizeStart={startResize} onResizeKeyboard={resizeWithKeyboard} readerShare={readerShare} minReaderShare={minReaderShare} maxReaderShare={maxReaderShare} showVerbBn={showVerbBn} showVerbEn={showVerbEn} />}
+      {selection && <DeferredFeature componentKey={`${selection.key}:${selection.word.position}`} load={loadWordPanel} label="Word study" onClose={() => setSelection(null)} componentProps={{ verseKey: selection.key, word: selection.word, saved: isSaved, onSave: toggleSave, onClose: () => setSelection(null), onNavigate: navigate, onResizeStart: startResize, onResizeKeyboard: resizeWithKeyboard, readerShare, minReaderShare, maxReaderShare, showVerbBn, showVerbEn }} />}
     </div>
   </div>
 }

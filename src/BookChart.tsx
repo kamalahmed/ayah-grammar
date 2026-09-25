@@ -1,6 +1,6 @@
 import { ExternalLink } from 'lucide-react'
-import { bookCell, bookPageUrl, bookPersons } from './bookVerbs'
-import type { BookAspect, BookVerb } from './bookVerbs'
+import { bookCell, bookPageUrl, bookPersons } from './bookData'
+import type { BookAspect, BookVerb } from './bookData'
 import { personLabels, pronounLabels } from './study'
 
 declare const __LOCAL_BOOK_PDFS__: number[]
