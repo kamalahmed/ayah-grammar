@@ -8,8 +8,10 @@ import verbUrls from 'virtual:verb-data'
 import { studyCache, useJsonData } from './useJsonData'
 import type { VerbStudyData } from '../build/verbShards'
 import { bookCell, findBookReading, meaningForBookReading } from './bookData'
+import type { BookVerb } from './bookData'
+import { englishPatternExample } from './patternMeaning'
 import BookChart from './BookChart'
-import type { Word } from './types'
+import type { VerbOccurrence, Word } from './types'
 
 interface Props {
   word: Word
@@ -59,6 +61,23 @@ export default function WordPanel({ word, verseKey, saved, onSave, onClose, onNa
   const books = study.data?.books ?? []
   const bookVerb = findBookReading(books, word.root, selectedForm, selectedVoice, selectedParadigm?.['3MS'].perfect)
   const meaningVerb = findBookReading(books, word.root, selectedForm, selectedVoice)
+  const patternStudy = useJsonData<VerbStudyData>(isVerb && isTriliteral && paradigm ? verbUrls.fEl || null : null, studyCache)
+  const patternBook = findBookReading(patternStudy.data?.books || [], 'fEl', selectedForm, 'ACT', paradigm?.['3MS'].perfect)
+  const patternPair = (label: string, past: string, present: string, book: BookVerb | null, examples: VerbOccurrence[], patternVoice: string, note: string) => <div className="pattern-column">
+    <span>{label}</span>
+    <div className="pattern-readings">{([{ aspect: 'PERF', arabic: past, tense: 'Past' }, { aspect: 'IMPF', arabic: present, tense: 'Present / future' }] as const).map(({ aspect, arabic, tense }) => {
+      const bangla = showVerbBn && meaningForBookReading(book, aspect, '3MS', arabic)
+      const english = showVerbEn && englishPatternExample(examples, arabic, selectedForm, patternVoice, aspect)
+      return <div className="pattern-reading" key={aspect}>
+        <div><small className="pattern-tense">{tense}</small><strong className="pattern-arabic" lang="ar" dir="rtl">{arabic}</strong></div>
+        <div className="pattern-glosses">
+          {bangla && <span lang="bn">{bangla}</span>}
+          {english && <span lang="en">{english.en}<button className="pattern-source" onClick={() => onNavigate(english.key, english.position)} title={`English in context: ${english.arabic}`}>Quran {english.key}:{english.position}</button></span>}
+        </div>
+      </div>
+    })}</div>
+    <small className="pattern-note">{note}{showVerbBn && book ? ` · বাংলা: Book ${book.level}, p. ${book.source.pdf_page}` : ''}</small>
+  </div>
   const selectedCell = (person: string, aspect: 'PERF' | 'IMPF' | 'IMPV') => {
     const arabic = aspect === 'PERF' ? selectedParadigm?.[person]?.perfect : aspect === 'IMPF' ? selectedParadigm?.[person]?.imperfect : selectedParadigm?.[person]?.imperative
     const bangla = showVerbBn && meaningForBookReading(meaningVerb, aspect, person, arabic)
@@ -108,12 +127,13 @@ export default function WordPanel({ word, verseKey, saved, onSave, onClose, onNa
       {isVerb && word.root && study.error && <div className="load-error" role="alert"><p>This verb’s study data could not load. Word meanings remain available.</p><button className="action-button" onClick={study.retry}>Try again</button></div>}
       {isVerb && word.root && study.data && <section className="verb-section">
         <div className="section-title"><span className="section-number">01</span> Explore this verb</div>
-        <div className="form-identity">
-          <div><span>SELECTED VERB FORM</span><strong>Form {selectedForm}{selectedNumber ? ` · ${selectedNumber}` : ''}</strong><small>{selectedVoice === 'PASS' ? 'Passive examples' : 'Active examples'}</small></div>
-          <div><span>FORM PATTERN · HE</span><strong className="pattern-pair" lang="ar" dir="ltr"><b dir="rtl">{paradigm?.['3MS'].perfect || selectedPattern || '—'}</b><b dir="rtl">{paradigm?.['3MS'].imperfect || '—'}</b></strong><small>Past · Present <a href="https://corpus.quran.com/documentation/verbforms.jsp" target="_blank" rel="noreferrer">pattern guide</a></small></div>
-          <div><span>THIS VERB · HE</span><strong className="pattern-pair" lang="ar" dir="ltr"><b dir="rtl">{(bookVerb && bookCell(bookVerb, 'PERF', '3MS')?.ar) || selectedParadigm?.['3MS'].perfect || '—'}</b><b dir="rtl">{(bookVerb && bookCell(bookVerb, 'IMPF', '3MS')?.ar) || selectedParadigm?.['3MS'].imperfect || '—'}</b></strong><small>Past · Present{selectedVoice === 'PASS' ? ' · Passive' : ''}</small></div>
+        <div className="form-identity with-meanings">
+          <div className="form-selection"><span>SELECTED VERB FORM</span><strong>Form {selectedForm}{selectedNumber ? ` · ${selectedNumber}` : ''}</strong><small>{selectedVoice === 'PASS' ? 'Passive examples' : 'Active examples'}</small></div>
+          {patternPair('FORM PATTERN · HE', paradigm?.['3MS'].perfect || selectedPattern || '—', paradigm?.['3MS'].imperfect || '—', patternBook, patternStudy.data?.occurrences || [], 'ACT', 'Active teaching pattern')}
+          {patternPair('THIS VERB · HE', (bookVerb && bookCell(bookVerb, 'PERF', '3MS')?.ar) || selectedParadigm?.['3MS'].perfect || '—', (bookVerb && bookCell(bookVerb, 'IMPF', '3MS')?.ar) || selectedParadigm?.['3MS'].imperfect || '—', bookVerb, occurrences || [], selectedVoice, selectedVoice === 'PASS' ? 'Passive' : 'Active')}
           {patternExample ? <button className="form-example" onClick={() => onNavigate(patternExample.key, patternExample.position)}><span>QURAN EXAMPLE</span><strong lang="ar" dir="rtl">{patternExample.arabic}</strong><small>{patternExample.key}:{patternExample.position} · {patternExample.en}</small></button> : <div><span>QURAN EXAMPLE</span><strong>—</strong><small>No matching occurrence</small></div>}
         </div>
+        {(showVerbBn || showVerbEn) && <p className="section-hint pattern-meaning-note">বাংলা: matching book forms. English: linked Quran examples, whose meaning depends on context. Meanings appear only where a source matches.</p>}
         {formGuide[selectedForm] && <details className="form-help"><summary><CircleHelp size={16} /> What does Form {selectedForm} mean?</summary><p>{formGuide[selectedForm]} A form suggests a common pattern of meaning; the actual sense depends on the verb and its context. <a href={verbFormsSource} target="_blank" rel="noreferrer">Read the Corpus guide</a>.</p></details>}
         {isTriliteral && <details className="form-help all-forms-help"><summary><CircleHelp size={16} /> Explain all ten three-letter forms</summary><div className="form-guide-list">{Object.entries(triliteralGuide).map(([number, explanation]) => <div key={number}><strong>Form {number}</strong><span className="guide-pattern" lang="ar" dir="rtl">{verbFormPattern(number, word.root)}</span><span>{explanation}</span></div>)}</div><p>These are teaching patterns. A root does not necessarily occur in every form. <a href={verbFormsSource} target="_blank" rel="noreferrer">Source: Quranic Arabic Corpus</a>.</p></details>}
         {forms.length > 1 && <div className="form-filter"><span>Compare patterns</span><div>{forms.map(item => <button key={item} className={item === selectedForm ? 'selected' : ''} onClick={() => { setSelectedForm(item); if (!(occurrences || []).some(entry => entry.form === item && entry.voice === selectedVoice)) setSelectedVoice((occurrences || []).find(entry => entry.form === item)?.voice || 'ACT'); if (!referenceParadigm(item, word.root?.length || 0)) setTab('chart'); setShowAll(false) }}>Form {item}</button>)}</div></div>}

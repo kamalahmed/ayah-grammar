@@ -151,3 +151,9 @@
 :root[data-theme="dark"] .font-scale-setting strong { color:#e5efdc; }
 :root[data-theme="dark"] .selected-word-context { background:#2b4132;border-color:#d2a86e; }
 :root[data-theme="dark"] .selected-paradigm-cell .book-verb-meaning { color:#c3d5c1; }
+:root[data-theme="dark"] .setting-hint { color:#b8cbb9; }
+:root[data-theme="dark"] .form-identity .pattern-glosses span { color:#dce9d9; }
+:root[data-theme="dark"] .pattern-source { color:#b2dfb2; }
+:root[data-theme="dark"] .form-identity.with-meanings .form-selection,
+:root[data-theme="dark"] .form-identity.with-meanings .form-example,
+:root[data-theme="dark"] .form-identity.with-meanings .pattern-column { border-color:#587158; }

@@ -3,6 +3,11 @@ export function readFontScale(saved: string | null): number {
   return Number.isFinite(value) && value >= 0.8 && value <= 1.4 ? Math.round(value * 10) / 10 : 1
 }
 
+export function readArabicScale(saved: string | null): number {
+  const value = Number(saved)
+  return Number.isFinite(value) && value >= 0.8 && value <= 2 ? Math.round(value * 10) / 10 : 1
+}
+
 export function readReaderShare(saved: string | null): number {
   const value = Number(saved)
   return Number.isFinite(value) && value >= 0.2 && value <= 0.7 ? value : 0.3

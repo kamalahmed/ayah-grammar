@@ -61,7 +61,8 @@ Bangla is central to the experience, alongside English. My focus is a calm readi
 
 ### A reading space that adapts
 
-- **Light, dark and system themes**, with adjustable text size.
+- **Light, dark and system themes**, with adjustable text size and a separate Arabic verse size control.
+- **Arabic verse visibility**, independent of word-by-word meanings; reading preferences are saved in the browser.
 - **Independent meaning controls** for Bangla, English, word glosses and verb study.
 - **Resizable desktop panels** and a collapsible surah sidebar.
 - **A mobile study sheet** with charts that scroll inside the panel.
@@ -79,6 +80,8 @@ Bangla is central to the experience, alongside English. My focus is a calm readi
 | **Full conjugation** | The matching book chart with Bangla meanings, plus an optional generated Arabic chart with the wider set of persons. |
 
 The book collection supplies masculine and first-person forms. Feminine, dual and passive Bangla meanings are left absent where the books do not supply them. The two readings of entry 374 are both preserved, giving **501 readings across 500 numbered entries**. Two entries have no conjugation table, and one has past forms only.
+
+The past/present patterns in “Explore this verb” include matching Bangla book meanings and linked English Quran examples where available. The books supply Bangla, not English. English examples retain their contextual wording and verse references; a teaching pattern without a matching source remains untranslated.
 
 Book transcriptions have completeness checks and targeted visual review; they have not all been independently proofread. Entry numbers, page references and review notes make unusual entries easier to check against a personal copy.
 

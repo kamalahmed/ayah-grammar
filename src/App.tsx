@@ -8,7 +8,7 @@ import VerseCard from './VerseCard'
 
 import type { Chapter, Verse, Word } from './types'
 import { readThemePreference, resolveTheme } from './theme'
-import { clampReaderShare, readFontScale, readReaderShare, readerShareBounds } from './displayPreferences'
+import { clampReaderShare, readArabicScale, readFontScale, readReaderShare, readerShareBounds } from './displayPreferences'
 
 const loadWordPanel = deferModule(() => import('./WordPanel'))
 const loadVerbLibrary = deferModule(() => import('./VerbLibrary'))
@@ -39,6 +39,8 @@ export default function App() {
   const [language, setLanguage] = useState<LanguageMode>(() => (localStorage.getItem('ayah-language') as LanguageMode) || 'both')
   const [highlightVerbs, setHighlightVerbs] = useState(() => localStorage.getItem('ayah-highlight') !== 'false')
   const [showWordMeanings, setShowWordMeanings] = useState(() => localStorage.getItem('ayah-word-meanings') !== 'false')
+  const [showArabicVerses, setShowArabicVerses] = useState(() => localStorage.getItem('ayah-arabic-verses') !== 'false')
+  const [arabicScale, setArabicScale] = useState(() => readArabicScale(localStorage.getItem('ayah-arabic-scale') ?? localStorage.getItem('ayah-font-scale')))
   const [showVerbBn, setShowVerbBn] = useState(() => localStorage.getItem('ayah-verb-meaning-bn') !== 'false')
   const [showVerbEn, setShowVerbEn] = useState(() => localStorage.getItem('ayah-verb-meaning-en') !== 'false')
   const [themePreference, setThemePreference] = useState(() => readThemePreference(localStorage.getItem('ayah-theme')))
@@ -96,6 +98,8 @@ export default function App() {
   useEffect(() => { localStorage.setItem('ayah-language', language) }, [language])
   useEffect(() => { localStorage.setItem('ayah-highlight', String(highlightVerbs)) }, [highlightVerbs])
   useEffect(() => { localStorage.setItem('ayah-word-meanings', String(showWordMeanings)) }, [showWordMeanings])
+  useEffect(() => { localStorage.setItem('ayah-arabic-verses', String(showArabicVerses)) }, [showArabicVerses])
+  useEffect(() => { localStorage.setItem('ayah-arabic-scale', String(arabicScale)) }, [arabicScale])
   useEffect(() => { localStorage.setItem('ayah-verb-meaning-bn', String(showVerbBn)) }, [showVerbBn])
   useEffect(() => { localStorage.setItem('ayah-verb-meaning-en', String(showVerbEn)) }, [showVerbEn])
   useEffect(() => {
@@ -209,7 +213,7 @@ export default function App() {
     else setSurahMenu(true)
   }
 
-  return <div className="app-shell" style={{ '--font-scale': fontScale } as CSSProperties}>
+  return <div className="app-shell" style={{ '--font-scale': fontScale, '--arabic-scale': arabicScale } as CSSProperties}>
     <header className="topbar">
       <div className="brand"><span className="brand-mark" aria-hidden="true">۞</span><div><strong>AYAH <em>GRAMMAR</em></strong><small>READ DEEPLY</small></div></div>
       <nav className="top-actions" aria-label="Reader controls">
@@ -226,11 +230,16 @@ export default function App() {
         <div className="segmented-control theme-control" role="group" aria-label="Theme">{(['system', 'light', 'dark'] as const).map(theme => <button key={theme} className={themePreference === theme ? 'selected' : ''} aria-pressed={themePreference === theme} onClick={() => setThemePreference(theme)}>{theme === 'system' ? 'System' : theme === 'light' ? 'Light' : 'Dark'}</button>)}</div>
         <label className="font-scale-setting" htmlFor="font-scale"><span>Text size</span><strong>{fontScale.toFixed(1)}×</strong></label>
         <input id="font-scale" className="font-scale-slider" type="range" min="0.8" max="1.4" step="0.1" value={fontScale} onChange={event => setFontScale(Number(event.target.value))} aria-label="Text size" />
+        <label className="font-scale-setting" htmlFor="arabic-scale"><span>Arabic verse size</span><strong>{arabicScale.toFixed(1)}×</strong></label>
+        <input id="arabic-scale" className="font-scale-slider" type="range" min="0.8" max="2" step="0.1" value={arabicScale} onChange={event => setArabicScale(Number(event.target.value))} aria-label="Arabic verse size" aria-valuetext={`${Math.round(arabicScale * 100)} percent`} />
+        <small className="setting-hint">Only the Arabic ayah text and opening basmalah.</small>
+        <p>Reading content</p>
+        <label className="setting-toggle"><span>Arabic verses</span><input type="checkbox" checked={showArabicVerses} onChange={event => setShowArabicVerses(event.target.checked)} /></label>
+        <label className="setting-toggle"><span>Word-by-word meanings</span><input type="checkbox" checked={showWordMeanings} onChange={event => setShowWordMeanings(event.target.checked)} /></label>
+        <label className="setting-toggle"><span>Highlight verbs</span><input type="checkbox" checked={highlightVerbs} onChange={event => setHighlightVerbs(event.target.checked)} /></label>
         <p>Verb study meanings</p>
         <label className="setting-toggle"><span>বাংলা book meanings</span><input type="checkbox" checked={showVerbBn} onChange={event => setShowVerbBn(event.target.checked)} /></label>
         <label className="setting-toggle"><span>English Quran example</span><input type="checkbox" checked={showVerbEn} onChange={event => setShowVerbEn(event.target.checked)} /></label>
-        <label className="setting-toggle"><span>Word-by-word meanings</span><input type="checkbox" checked={showWordMeanings} onChange={event => setShowWordMeanings(event.target.checked)} /></label>
-        <label className="setting-toggle"><span>Highlight verbs</span><input type="checkbox" checked={highlightVerbs} onChange={event => setHighlightVerbs(event.target.checked)} /></label>
       </div>}
       {savedOpen && <div className="settings-popover saved-popover">
         <div className="popover-head"><strong>Saved words</strong><button className="icon-button" aria-label="Close saved words" onClick={() => setSavedOpen(false)}><X size={17} /></button></div>
@@ -261,8 +270,8 @@ export default function App() {
         {chapterData.error && <div className="load-error" role="alert"><p>This chapter could not load. Reconnect and try again.</p><button className="action-button" onClick={chapterData.retry}>Retry chapter</button></div>}
         {chapterData.loading && <div className="loading-message" role="status">Opening the chapter…</div>}
         {verses.length > 0 && <div className="verses">
-          {verses[0].opening && <div className="basmalah" lang="ar" dir="rtl">{verses[0].opening}</div>}
-          {verses.map((verse, index) => <VerseCard key={verse.key} verse={verse} index={index} selectedPosition={selection?.key === verse.key ? selection.word.position : undefined} highlightVerbs={highlightVerbs} showWordMeanings={showWordMeanings} language={language} onSelect={selectWord} />)}
+          {showArabicVerses && verses[0].opening && <div className="basmalah" lang="ar" dir="rtl">{verses[0].opening}</div>}
+          {verses.map((verse, index) => <VerseCard key={verse.key} verse={verse} index={index} selectedPosition={selection?.key === verse.key ? selection.word.position : undefined} highlightVerbs={highlightVerbs} showArabicVerses={showArabicVerses} showWordMeanings={showWordMeanings} language={language} onSelect={selectWord} />)}
         </div>}
         <div className="chapter-pagination"><button disabled={chapterNumber <= 1} onClick={() => selectChapter(chapterNumber - 1)}><ChevronLeft size={17} /> Previous surah</button><button disabled={chapterNumber >= 114} onClick={() => selectChapter(chapterNumber + 1)}>Next surah <ChevronRight size={17} /></button></div>
         <footer className="reader-footer">Quran text: Tanzil · Verse translations: Saheeh International and Muhiuddin Khan · Grammar: Quranic Arabic Corpus · Word meanings: GTAF. <a href="/sources.html">Sources & credits</a></footer>
