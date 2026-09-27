@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ComponentType } from 'react'
 import { X } from 'lucide-react'
+import type { UiLanguage } from './uiText'
+import { uiText } from './uiText'
 
 interface Props<P extends object> {
   load: () => Promise<{ default: ComponentType<P> }>
@@ -9,9 +11,10 @@ interface Props<P extends object> {
   onClose: () => void
   modal?: boolean
   componentKey?: string
+  uiLanguage?: UiLanguage
 }
 
-function LoadingFeature({ label, error, retry, onClose, modal }: { label: string; error: boolean; retry: () => void; onClose: () => void; modal?: boolean }) {
+function LoadingFeature({ label, error, retry, onClose, modal, uiLanguage = 'en' }: { label: string; error: boolean; retry: () => void; onClose: () => void; modal?: boolean; uiLanguage?: UiLanguage }) {
   const dialog = useRef<HTMLDialogElement>(null)
   useEffect(() => {
     const element = dialog.current
@@ -19,15 +22,15 @@ function LoadingFeature({ label, error, retry, onClose, modal }: { label: string
     return () => element?.close()
   }, [])
   const content = <>
-    <div className="panel-header"><div className="panel-heading">{label}</div><button className="icon-button" onClick={onClose} aria-label={`Close ${label}`}><X size={19} /></button></div>
+    <div className="panel-header"><div className="panel-heading">{label}</div><button className="icon-button" onClick={onClose} aria-label={uiText(uiLanguage, 'Close {label}', { label })}><X size={19} /></button></div>
     <div className="loading-message" role={error ? 'alert' : 'status'}>
-      {error ? <><p>Could not load {label.toLowerCase()}. Reconnect and try again.</p><div className="panel-actions"><button className="action-button" onClick={retry}>Try again</button><button className="action-button" onClick={() => window.location.reload()}>Reload app</button></div></> : `Opening ${label.toLowerCase()}…`}
+      {error ? <><p>{uiText(uiLanguage, 'Could not load {label}. Reconnect and try again.', { label })}</p><div className="panel-actions"><button className="action-button" onClick={retry}>{uiText(uiLanguage, 'Try again')}</button><button className="action-button" onClick={() => window.location.reload()}>{uiText(uiLanguage, 'Reload app')}</button></div></> : uiText(uiLanguage, 'Opening {label}…', { label })}
     </div>
   </>
   return modal ? <dialog ref={dialog} className="book-library" onClose={onClose} aria-label={label}>{content}</dialog> : <aside className="study-panel" aria-label={label}>{content}</aside>
 }
 
-export default function DeferredFeature<P extends object>({ load, componentProps, label, onClose, modal, componentKey }: Props<P>) {
+export default function DeferredFeature<P extends object>({ load, componentProps, label, onClose, modal, componentKey, uiLanguage }: Props<P>) {
   const [Component, setComponent] = useState<ComponentType<P> | null>(null)
   const [error, setError] = useState(false)
   const [attempt, setAttempt] = useState(0)
@@ -38,5 +41,5 @@ export default function DeferredFeature<P extends object>({ load, componentProps
       .catch(() => { if (active) setError(true) })
     return () => { active = false }
   }, [load, attempt])
-  return Component ? <Component key={componentKey} {...componentProps} /> : <LoadingFeature label={label} error={error} retry={() => setAttempt(value => value + 1)} onClose={onClose} modal={modal} />
+  return Component ? <Component key={componentKey} {...componentProps} /> : <LoadingFeature label={label} error={error} retry={() => setAttempt(value => value + 1)} onClose={onClose} modal={modal} uiLanguage={uiLanguage} />
 }

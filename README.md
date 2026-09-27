@@ -64,6 +64,8 @@ Bangla is central to the experience, alongside English. My focus is a calm readi
 - **Light, dark and system themes**, with adjustable text size and a separate Arabic verse size control.
 - **Arabic verse visibility**, independent of word-by-word meanings; reading preferences are saved in the browser.
 - **Independent meaning controls** for Bangla, English, word glosses and verb study.
+- **Bangla or English interface** selection, separate from the meaning controls.
+- **Recitation** with a saved reciter choice, and a pronunciation button for the selected word. Audio streams when played and requires internet access; word recordings come from a separate source and do not follow the reciter choice.
 - **Resizable desktop panels** and a collapsible surah sidebar.
 - **A mobile study sheet** with charts that scroll inside the panel.
 - **Saved words** and reading preferences stored in your browser.
@@ -76,7 +78,7 @@ Bangla is central to the experience, alongside English. My focus is a calm readi
 | View | What it shows |
 | --- | --- |
 | **Quran examples** | Forms actually attested in the morphology corpus, with contextual meanings and ayah references. An empty applicable slot stays empty. |
-| **Full pattern** | Reference conjugations using the teaching roots فعل and فعلل. |
+| **Full pattern** | Reference conjugations using the teaching roots فعل and فعلل, with feminine and dual rows hidden until requested. Its bilingual headers match Full conjugation. |
 | **Full conjugation** | The matching book chart with Bangla meanings, plus an optional generated Arabic chart with the wider set of persons. |
 
 The book collection supplies masculine and first-person forms. Feminine, dual and passive Bangla meanings are left absent where the books do not supply them. The two readings of entry 374 are both preserved, giving **501 readings across 500 numbered entries**. Two entries have no conjugation table, and one has past forms only.
@@ -95,7 +97,7 @@ For personal study, local copies can be placed in the ignored `public/books/` fo
 
 ## Run it locally
 
-**Requirements:** Node.js 20.19+ or 22.12+, npm, and Python 3 for the data checks.
+**Requirements:** Node.js 26 (the version in [`.nvmrc`](.nvmrc)), npm, and Python 3 for the data checks.
 
 ```bash
 git clone https://github.com/kamalahmed/ayah-grammar.git
@@ -120,7 +122,13 @@ The live [Ayah Grammar subdomain](https://ayah.kamalahmed.me/) is a static site 
 
 Only `dist/` is published. SSH credentials and the verified server host key belong in GitHub Actions secrets; host, user, port, and document root are GitHub Actions variables. No private key, password, personal PDF, or local `.env` file belongs in this repository. The required names, initial setup, manual release command, and rollback procedure are in [Hostinger production deployment](docs/DEPLOYMENT.md).
 
+For a visual walkthrough, open [How to deploy automatically to Hostinger](docs/how-to-deploy-automatically-to-hostinger.html). It is a standalone HTML guide that can also be kept on your Desktop.
+
 For full offline reading, open the installed PWA while online and use **Display → Offline reading → Save for offline use**. Keep it open until it reports completion. The current complete set is about 45 MB before browser storage overhead. A browser may later evict stored data, so check the status again before travel.
+
+## Edit the Bangla interface
+
+The interface labels live in [src/uiText.ts](src/uiText.ts). Find the English label on the left and edit its Bangla value on the right; preserve any `{placeholder}` names. For a new label, add it to that file and call `uiText` (or the component's `t` helper) with the same English key. See [Interface translation guide](docs/TRANSLATING_INTERFACE.md) for examples and a check procedure. Quran verse and word translations come from separate source data.
 
 ## How it works
 

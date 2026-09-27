@@ -141,6 +141,10 @@
 :root[data-theme="dark"] .form-guide-list>div { border-color:#4e6650; }
 :root[data-theme="dark"] .guide-pattern { color:#d9ebd5; }
 :root[data-theme="dark"] .reference-chart td { color:#e3efdf; }
+:root[data-theme="dark"] .reciter-select{color:#b6cabb}
+:root[data-theme="dark"] .reciter-select select,:root[data-theme="dark"] .verse-audio-button{background:#223b31;border-color:#476451;color:#dceede}
+:root[data-theme="dark"] .verse-audio-button[aria-pressed=true]{background:#355c43}
+:root[data-theme="dark"] .audio-error{background:#493028;border-color:#945c4e;color:#ffd8c9}
 :root[data-theme="dark"] .reading-location { background:#182723ed;border-color:#45604b;box-shadow:0 6px 18px #09181140; }
 :root[data-theme="dark"] .reading-location button { color:#d9e9d8; }
 :root[data-theme="dark"] .reading-location button span,:root[data-theme="dark"] .reading-location-ayah { color:#d6bd93; }

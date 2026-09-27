@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { attestedChart, arabicRoot, chartSlotApplies, personOrder, pronounLabels, verbFormNumber, verbFormPattern } from './study'
+import { attestedChart, arabicRoot, chartSlotApplies, personOrder, pronounLabels, referencePatternPersons, verbFormNumber, verbFormPattern } from './study'
 import type { VerbOccurrence } from './types'
 
 const occurrence = (person: string, aspect: string, arabic: string, form = 'I'): VerbOccurrence => ({
@@ -55,5 +55,17 @@ describe('study data', () => {
     expect(personOrder).toContain('2D')
     expect(pronounLabels['2D']).toBe('أَنْتُمَا')
     expect(attestedChart([occurrence('2D', 'IMPF', 'تَعْلَمَانِ')], 'I', 'ACT')['IMPF:2D']?.arabic).toBe('تَعْلَمَانِ')
+  })
+
+  it('shows the book-style person order by default in the reference pattern', () => {
+    expect(referencePatternPersons(false)).toEqual(['3MS', '3MP', '2MS', '2MP', '1S', '1P'])
+  })
+
+  it('keeps third, second, then first person when feminine and dual rows are shown', () => {
+    expect(referencePatternPersons(true)).toEqual([
+      '3MS', '3FS', '3MD', '3FD', '3MP', '3FP',
+      '2MS', '2FS', '2MD', '2FD', '2MP', '2FP',
+      '1S', '1P',
+    ])
   })
 })

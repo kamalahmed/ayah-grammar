@@ -1,5 +1,7 @@
 # Static hosting
 
+For a self-contained, illustrated walkthrough, see [How to deploy automatically to Hostinger](how-to-deploy-automatically-to-hostinger.html).
+
 Ayah Grammar runs as a static website. The production build contains the Quran chapters and study data needed by the application; it does not need a running Node.js, Python, MySQL, or SQLite server.
 
 Live site: [ayah.kamalahmed.me](https://ayah.kamalahmed.me/), hosted on Hostinger with HTTPS. The initial production release is `eb430fe`, published September 25, 2026. Its document root is the `public_html/ayah` folder beneath the `kamalahmed.me` hosting domain.
@@ -22,6 +24,8 @@ The build excludes the personal `public/books/` folder. Do not upload the source
 ## Automatic Hostinger deployment
 
 The [GitHub Actions workflow](../.github/workflows/deploy-hostinger.yml) runs after pushes to `main` and can also be started manually. It uses the same process as the verified September 25 release: run tests and build; upload `dist/` to a release directory over SSH; compare SHA-256 hashes there; upload files incrementally to the existing `public_html/ayah` document root; verify them; and atomically replace the live `index.html` last. It does not delete old content-hashed assets, which may still be needed by open tabs. A failed build or staging verification leaves the current entry page in place.
+
+The workflow reads the current Node major from [`.nvmrc`](../.nvmrc), requests its latest patch, and uses current `actions/checkout` and `actions/setup-node` releases. Node is used for testing and building on GitHub's runner; the published static site does not run Node on Hostinger.
 
 The Ayah subdomain is separate from the main domain's GitHub deployment. Do not enter the source repository into the subdomain's hPanel **Create a New Repository** form: this site serves the built `dist/` output, and that form requires an empty target directory.
 

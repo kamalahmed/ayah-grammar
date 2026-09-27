@@ -60,6 +60,18 @@ export function chartSlotApplies(aspect: string, person: string): boolean {
 // Corpus v0.4 also uses 2D when the dual's gender is not specified.
 export const personOrder = ['1S', '1P', '2MS', '2FS', '2D', '2MD', '2FD', '2MP', '2FP', '3MS', '3FS', '3MD', '3FD', '3MP', '3FP']
 
+const commonPatternPersons = ['3MS', '3MP', '2MS', '2MP', '1S', '1P']
+// The reference paradigm has gender-specific dual forms, but no gender-unmarked 2D slot.
+const fullPatternPersons = [
+  '3MS', '3FS', '3MD', '3FD', '3MP', '3FP',
+  '2MS', '2FS', '2MD', '2FD', '2MP', '2FP',
+  '1S', '1P',
+]
+
+export function referencePatternPersons(showFeminineAndDual: boolean): string[] {
+  return showFeminineAndDual ? fullPatternPersons : commonPatternPersons
+}
+
 export const pronounLabels: Record<string, string> = {
   '1S': 'أَنَا', '1P': 'نَحْنُ',
   '2MS': 'أَنْتَ', '2FS': 'أَنْتِ', '2D': 'أَنْتُمَا', '2MD': 'أَنْتُمَا', '2FD': 'أَنْتُمَا',
