@@ -17,7 +17,7 @@ Words are aligned by surah, ayah and position. Four known word-boundary differen
 
 - `data/books/quran-verbs-500.json`: full export with PDF page/cell coordinates and correction records.
 - `data/books/quran-verbs-500.csv`: spreadsheet-friendly UTF-8 export.
-- `src/bookVerbs.json`: compact application copy.
+- `data/generated/bookVerbs.json`: compact application copy.
 
 The original PDF books are **not included in the repository**. They are not required to run the app or import the bundled study data. Local PDF files are ignored by Git.
 

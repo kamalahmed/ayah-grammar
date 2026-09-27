@@ -1,6 +1,6 @@
 # Editing the Bangla interface
 
-The single place to edit Bangla **interface labels** is [`src/uiText.ts`](../src/uiText.ts). Its `bangla` table maps an English label to the Bangla shown when a reader chooses **Display → Interface language → বাংলা**.
+The single place to edit Bangla **interface labels** is [`src/i18n/locales/bn.ts`](../src/i18n/locales/bn.ts). Its `bangla` table maps an English label to the Bangla shown when a reader chooses **Display → Interface language → বাংলা**.
 
 For example:
 

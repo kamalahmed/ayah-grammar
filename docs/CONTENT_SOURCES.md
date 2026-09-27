@@ -12,8 +12,8 @@ Ayah Grammar connects source text, translations and morphology through word loca
 | Chapter metadata | [Tanzil Quran metadata](https://tanzil.net/docs/Quran_Metadata) | `data/raw/tanzil-quran-data.xml` |
 | Word grammar | [Quranic Arabic Corpus v0.4](https://corpus.quran.com/download/) | `data/raw/quranic-corpus-morphology-0.4.txt` |
 | English and Bengali word glosses | [Greentech Apps Foundation](https://github.com/GreentechApps/Al-Quran/tree/master/dbs) | `data/raw/gtaf-words-en.db`, `data/raw/gtaf-words-bn.db` |
-| Reference and selected-root paradigms | Corpus citations and [Qutrub](https://github.com/linuxscout/qutrub) | `src/referenceParadigms.json`, `src/selectedParadigms.json` |
-| Book conjugations and Bangla meanings | Quran words, Levels 1 and 2, consulted from purchased personal copies | `data/books/`, `src/bookVerbs.json`; source PDFs are not distributed |
+| Reference and selected-root paradigms | Corpus citations and [Qutrub](https://github.com/linuxscout/qutrub) | `data/generated/referenceParadigms.json`, `data/generated/selectedParadigms.json` |
+| Book conjugations and Bangla meanings | Quran words, Levels 1 and 2, consulted from purchased personal copies | `data/books/`, `data/generated/bookVerbs.json`; source PDFs are not distributed |
 
 The original book PDFs are kept locally and excluded from Git. The study datasets retain entry and page references for checking against a personal copy. Thanks to the books' authors and publishers for the reference material.
 

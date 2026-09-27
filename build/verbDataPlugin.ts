@@ -15,7 +15,7 @@ export function verbDataPlugin(): Plugin {
     name: 'root-study-data',
     configResolved(config) { dev = config.command === 'serve' },
     buildStart() {
-      shards = createVerbShards(read('public/data/verbs.json'), read('src/selectedParadigms.json'), read('src/bookVerbs.json'))
+      shards = createVerbShards(read('data/generated/verbs.json'), read('data/generated/selectedParadigms.json'), read('data/generated/bookVerbs.json'))
       urls = Object.fromEntries(Object.entries(shards).map(([root, data]) => {
         const name = `verb-${rootName(root)}.json`
         const id = dev ? '' : this.emitFile({ type: 'asset', name, source: JSON.stringify(data) })

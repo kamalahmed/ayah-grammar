@@ -34,7 +34,7 @@ def build(source):
                 if not c['ar'] or not c['bn'] or not c['source_page']:
                     raise ValueError(f'Missing content or provenance in entry {v["entry_number"]}')
                 slots.add(slot)
-    output = ROOT / 'src/bookVerbs.json'
+    output = ROOT / 'data/generated/bookVerbs.json'
     output.write_text(json.dumps([compact(v) for v in verbs], ensure_ascii=False, separators=(',', ':')) + '\n')
     print(f'Imported {len(verbs)} numbered entries into {output.relative_to(ROOT)}')
 

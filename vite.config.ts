@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import { existsSync, rmSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { bookLibraryPlugin } from './build/bookLibraryPlugin'
 import { verbDataPlugin } from './build/verbDataPlugin'
 
 export default defineConfig(({ command }) => ({
@@ -10,7 +11,7 @@ export default defineConfig(({ command }) => ({
       ? [1, 2].filter(level => existsSync(resolve(`public/books/level-${level}.pdf`)))
       : []),
   },
-  plugins: [verbDataPlugin(), {
+  plugins: [verbDataPlugin(), bookLibraryPlugin(), {
     name: 'exclude-personal-book-pdfs',
     writeBundle(options) {
       if (options.dir) rmSync(resolve(options.dir, 'books'), { recursive: true, force: true })

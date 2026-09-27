@@ -128,7 +128,9 @@ For full offline reading, open the installed PWA while online and use **Display 
 
 ## Edit the Bangla interface
 
-The interface labels live in [src/uiText.ts](src/uiText.ts). Find the English label on the left and edit its Bangla value on the right; preserve any `{placeholder}` names. For a new label, add it to that file and call `uiText` (or the component's `t` helper) with the same English key. See [Interface translation guide](docs/TRANSLATING_INTERFACE.md) for examples and a check procedure. Quran verse and word translations come from separate source data.
+Start with [Where to edit Ayah Grammar](docs/EDITING_GUIDE.md) to locate interface translations, Quran translations, source databases, generated data, and feature code. The [architecture and performance review](docs/ARCHITECTURE_REVIEW.md) records the baseline, completed reorganization, and measured local results.
+
+The interface labels live in [src/i18n/locales/bn.ts](src/i18n/locales/bn.ts). Find the English label on the left and edit its Bangla value on the right; preserve any `{placeholder}` names. For a new label, add it to that file and call `uiText` (or the component's `t` helper) with the same English key. See [Interface translation guide](docs/TRANSLATING_INTERFACE.md) for examples and a check procedure. Quran verse and word translations come from separate source data.
 
 ## How it works
 
@@ -155,20 +157,27 @@ flowchart LR
 | Persistence | Browser local storage and a service worker cache |
 | Verification | Vitest and Python `unittest` |
 
-Each word is identified by **surah, ayah and word position**. Chapters load on demand, recent chapters are reused in memory, and changing chapters cancels obsolete requests. The build splits verb study data into content-hashed files by root. The reader loads the study panel, the selected root's data, and the 500-verb library only when each is needed. Book meanings are matched by root, form, voice, aspect, person and Arabic spelling before being attached to a generated chart.
+Each word is identified by **surah, ayah and word position**. Chapters load on demand, recent chapters are reused in memory, and changing chapters cancels obsolete requests. The build splits verb study data into content-hashed files by root. The reader loads the study panel, the selected root's data, and the 500-verb library only when each is needed. The library loads a generated search index and fetches details only for the selected entry. Offline pack checks start when Display settings open. Book meanings are matched by root, form, voice, aspect, person and Arabic spelling before being attached to a generated chart.
 
 For publishing the production build on a subdomain, see [Static hosting and deployment](docs/DEPLOYMENT.md).
 
 ### Repository guide
 
 ```text
-src/                 Reader, study panels, themes and conjugation datasets
-public/data/         All 114 chapters, chapter metadata and verb occurrences
+src/app/             App composition and layout
+src/features/        Reader, study, library, settings, saved words, audio, offline
+src/domain/          Quran types, conjugation rules and book matching
+src/i18n/locales/     Editable Bangla interface labels (bn.ts)
+src/shared/          Common components and bounded JSON loading
+src/styles/          Global styles and dark theme
+public/data/         All 114 runtime chapters and chapter metadata
 data/raw/            Source text, translations, morphology and SQLite databases
 data/books/          Full 500-verb export with provenance, plus CSV
-scripts/             Data preparation, conjugation and book-extraction tools
-tests/               Source-data alignment checks
-docs/                Source notes, roadmap and screenshots
+data/generated/      Verb index and compact book/paradigm build inputs
+build/               Vite data plugins for root shards and library entries
+scripts/             Data generation, extraction, offline manifest and deployment
+tests/               Build, service-worker and source-data integration checks
+docs/                Editing guide, architecture, source notes and deployment
 ```
 
 Rebuild the reader data with `npm run data:build`. Re-import the bundled book export with `python3 scripts/build_book_verb_meanings.py`. See [Data preparation](docs/DATA_PREPARATION.md) for the extraction workflow and [Content sources](docs/CONTENT_SOURCES.md) for data handling details.

@@ -41,7 +41,7 @@ with (EXPORT/'quran-verbs-500.csv').open('w',encoding='utf-8-sig',newline='') as
    for c in r['conjugations'] or [{}]:w.writerow([r['entry_number'],ri,r['level'],r['root_ar'],r['form'],r['meaning_bn'],c.get('aspect',''),c.get('person',''),c.get('ar',r['headword_ar']),c.get('bn',''),r['source']['pdf_file'],c.get('source_page',r['source']['pdf_page']),c.get('review_note_bn',c.get('correction_note_bn',r.get('note_bn','')))])
 def compact(r):
  return {**{k:v for k,v in r.items() if k not in ['conjugations','alternate_readings']},'conjugations':[{k:v for k,v in c.items() if k not in ['ar_bbox','bn_regions']} for c in r['conjugations']],**({'alternate_readings':[compact(x) for x in r['alternate_readings']]} if r.get('alternate_readings') else {})}
-(APP/'src/bookVerbs.json').write_text(json.dumps([compact(v) for v in vs],ensure_ascii=False,separators=(',',':'))+'\n')
+(APP/'data/generated/bookVerbs.json').write_text(json.dumps([compact(v) for v in vs],ensure_ascii=False,separators=(',',':'))+'\n')
 (OUT/'corrections.json').write_text(json.dumps(corrections,ensure_ascii=False,indent=2))
 for folder in [OUT/'extraction',APP/'scripts/book_extract']:
  folder.mkdir(parents=True,exist_ok=True)

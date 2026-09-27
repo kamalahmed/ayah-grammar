@@ -1,10 +1,10 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App'
-import { cacheVisitedResources } from './offlineResources'
-import './styles.css'
-import './dark.css'
-import './bookStudy.css'
+import App from './app/App'
+import { cacheVisitedResources } from './features/offline/offlineResources'
+import './styles/styles.css'
+import './styles/dark.css'
+import './features/study/bookStudy.css'
 
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App /></React.StrictMode>)
 

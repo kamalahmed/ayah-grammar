@@ -46,7 +46,7 @@ def main():
                 }
                 for person, pronoun in PERSONS.items()
             }
-    path = Path(__file__).resolve().parents[1] / "src" / "referenceParadigms.json"
+    path = Path(__file__).resolve().parents[1] / "data" / "generated" / "referenceParadigms.json"
     path.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n")
     print(f"Wrote {path}")
 

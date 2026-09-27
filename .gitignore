@@ -61,6 +61,6 @@ chat-exports/
 rollout_summaries/
 docs/BOOK_EXTRACTION.md
 data/raw/quran_verb_conjugations-v2.json
-src/bookVerbMeanings.json
+data/generated/bookVerbMeanings.json
 data/book-extraction-work/
 data/books/extraction-review/

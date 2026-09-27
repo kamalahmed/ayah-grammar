@@ -159,7 +159,7 @@ def main():
             }
             for voice in ("ACT", "PASS")
         }
-    path = ROOT / "src/selectedParadigms.json"
+    path = ROOT / "data/generated/selectedParadigms.json"
     path.write_text(json.dumps(output, ensure_ascii=False, separators=(",", ":")) + "\n")
     print(f"Wrote {sum(len(forms) for forms in output.values())} root/form paradigms to {path}")
 

@@ -173,7 +173,8 @@ def main():
     for number, chapter_verses in by_chapter.items():
         (destination / f"chapter-{number}.json").write_text(
             json.dumps(chapter_verses, ensure_ascii=False, separators=(",", ":")))
-    (destination / "verbs.json").write_text(json.dumps(verb_index, ensure_ascii=False, separators=(",", ":")))
+    (root / "data/generated").mkdir(parents=True, exist_ok=True)
+    (root / "data/generated/verbs.json").write_text(json.dumps(verb_index, ensure_ascii=False, separators=(",", ":")))
     print(f"Built {len(verses)} ayahs, {sum(len(v['words']) for v in verses)} words, "
           f"{sum(len(v) for v in verb_index.values())} verb occurrences")
 
