@@ -109,10 +109,32 @@ describe('on-demand offline caching', () => {
     const sw = worker()
     await sw.caches.open('unrelated-app')
     await sw.caches.open('ayah-grammar-v5')
+    await sw.caches.open(`ayah-grammar-pack-${'a'.repeat(64)}`)
     await sw.install()
     await sw.activate()
     expect(sw.stores.has('unrelated-app')).toBe(true)
     expect(sw.stores.has('ayah-grammar-v5')).toBe(false)
+    expect(sw.stores.has(`ayah-grammar-pack-${'a'.repeat(64)}`)).toBe(true)
+  })
+
+  it('serves a saved full-pack chapter and deferred study asset without internet', async () => {
+    const sw = worker()
+    const cache = await sw.caches.open(`ayah-grammar-pack-${'a'.repeat(64)}`)
+    await cache.put('/data/chapter-83.json', new Response('[{"key":"83:1"}]'))
+    await cache.put('/assets/study-new.js', new Response('study code'))
+    await sw.install()
+    await sw.activate()
+    sw.offline()
+    expect(await (await sw.get('/data/chapter-83.json'))?.json()).toEqual([{ key: '83:1' }])
+    expect(await (await sw.get('/assets/study-new.js'))?.text()).toBe('study code')
+  })
+
+  it('bypasses existing runtime content while downloading a fresh offline pack', async () => {
+    const sw = worker()
+    await sw.get('/assets/study.js')
+    await sw.get('/assets/study.js?__offline_pack=next')
+    await sw.get('/assets/study.js?__offline_pack=next')
+    expect(sw.requests).toEqual(['/assets/study.js', '/assets/study.js', '/assets/study.js'])
   })
 })
 

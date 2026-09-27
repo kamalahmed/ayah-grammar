@@ -1,0 +1,64 @@
+name: Deploy Ayah Grammar to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ayah-grammar-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Build and check the site
+        run: |
+          npm ci
+          npm test
+          npm run build
+      - name: Configure dedicated SSH access
+        env:
+          DEPLOY_KEY: ${{ secrets.HOSTINGER_DEPLOY_KEY }}
+          KNOWN_HOSTS: ${{ secrets.HOSTINGER_KNOWN_HOSTS }}
+          HOST: ${{ vars.HOSTINGER_DEPLOY_HOST }}
+          USER: ${{ vars.HOSTINGER_DEPLOY_USER }}
+          PORT: ${{ vars.HOSTINGER_DEPLOY_PORT }}
+        run: |
+          set -euo pipefail
+          : "${DEPLOY_KEY:?Missing HOSTINGER_DEPLOY_KEY}"
+          : "${KNOWN_HOSTS:?Missing HOSTINGER_KNOWN_HOSTS}"
+          : "${HOST:?Missing HOSTINGER_DEPLOY_HOST}"
+          : "${USER:?Missing HOSTINGER_DEPLOY_USER}"
+          : "${PORT:?Missing HOSTINGER_DEPLOY_PORT}"
+          install -d -m 700 "$RUNNER_TEMP/ayah-ssh"
+          printf '%s\n' "$DEPLOY_KEY" > "$RUNNER_TEMP/ayah-ssh/key"
+          printf '%s\n' "$KNOWN_HOSTS" > "$RUNNER_TEMP/ayah-ssh/known_hosts"
+          chmod 600 "$RUNNER_TEMP/ayah-ssh/key" "$RUNNER_TEMP/ayah-ssh/known_hosts"
+          cat > "$RUNNER_TEMP/ayah-ssh/config" <<EOF
+          Host ayah-hostinger
+            HostName $HOST
+            User $USER
+            Port $PORT
+            IdentityFile $RUNNER_TEMP/ayah-ssh/key
+            IdentitiesOnly yes
+            BatchMode yes
+            StrictHostKeyChecking yes
+            UserKnownHostsFile $RUNNER_TEMP/ayah-ssh/known_hosts
+          EOF
+          chmod 600 "$RUNNER_TEMP/ayah-ssh/config"
+          echo "AYAH_SSH_CONFIG=$RUNNER_TEMP/ayah-ssh/config" >> "$GITHUB_ENV"
+      - name: Stage, verify, and publish
+        env:
+          HOSTINGER_DEPLOY_ROOT: ${{ vars.HOSTINGER_DEPLOY_ROOT }}
+        run: bash scripts/deploy-hostinger.sh

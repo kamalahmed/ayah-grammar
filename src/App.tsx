@@ -9,6 +9,7 @@ import VerseCard from './VerseCard'
 import type { Chapter, Verse, Word } from './types'
 import { readThemePreference, resolveTheme } from './theme'
 import { clampReaderShare, readArabicScale, readFontScale, readReaderShare, readerShareBounds } from './displayPreferences'
+import { getOfflineManifest, offlinePackStatus, saveOfflinePack, type OfflineManifest } from './offlinePack'
 
 const loadWordPanel = deferModule(() => import('./WordPanel'))
 const loadVerbLibrary = deferModule(() => import('./VerbLibrary'))
@@ -55,6 +56,9 @@ export default function App() {
   const [desktopSidebar, setDesktopSidebar] = useState(() => window.matchMedia('(min-width: 1351px)').matches)
   const chaptersOpen = desktopSidebar ? !sidebarCollapsed : surahMenu
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [offlineManifest, setOfflineManifest] = useState<OfflineManifest | null>(null)
+  const [offlineState, setOfflineState] = useState<'checking' | 'available' | 'saving' | 'ready' | 'error'>('checking')
+  const [offlineProgress, setOfflineProgress] = useState({ saved: 0, total: 0 })
   const [savedOpen, setSavedOpen] = useState(false)
   const [libraryOpen, setLibraryOpen] = useState(false)
   const [search, setSearch] = useState('')
@@ -63,6 +67,34 @@ export default function App() {
   const studyRef = useRef<HTMLDivElement>(null)
   const workspaceRef = useRef<HTMLDivElement>(null)
   const chapterToggleRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    if (!import.meta.env.PROD) return
+    let active = true
+    getOfflineManifest().then(async manifest => {
+      const status = await offlinePackStatus(manifest)
+      if (!active) return
+      setOfflineManifest(manifest)
+      setOfflineProgress({ saved: status.saved, total: status.total })
+      setOfflineState(status.ready ? 'ready' : 'available')
+    }).catch(() => { if (active) setOfflineState('error') })
+    return () => { active = false }
+  }, [])
+
+  const saveOffline = async () => {
+    if (offlineState === 'saving') return
+    setOfflineState('saving')
+    try {
+      const manifest = offlineManifest ?? await getOfflineManifest()
+      setOfflineManifest(manifest)
+      if (navigator.storage?.persist) await navigator.storage.persist().catch(() => false)
+      await saveOfflinePack(manifest, progress => {
+        if (progress.saved % 10 === 0 || progress.saved === progress.total) setOfflineProgress(progress)
+      })
+      setOfflineProgress({ saved: manifest.files.length, total: manifest.files.length })
+      setOfflineState('ready')
+    } catch { setOfflineState('error') }
+  }
 
   useEffect(() => {
     const media = window.matchMedia('(min-width: 1351px)')
@@ -240,6 +272,14 @@ export default function App() {
         <p>Verb study meanings</p>
         <label className="setting-toggle"><span>বাংলা book meanings</span><input type="checkbox" checked={showVerbBn} onChange={event => setShowVerbBn(event.target.checked)} /></label>
         <label className="setting-toggle"><span>English Quran example</span><input type="checkbox" checked={showVerbEn} onChange={event => setShowVerbEn(event.target.checked)} /></label>
+        {import.meta.env.PROD && <div className="offline-pack-control">
+          <p>Offline reading</p>
+          <small className="setting-hint">Save all surahs, word meanings, verb study, and the 500-verb library on this device. Audio and external links still need internet.</small>
+          {offlineManifest && <small className="setting-hint">About {Math.ceil(offlineManifest.totalBytes / 1_000_000)} MB on this device.</small>}
+          <button className="action-button" onClick={saveOffline} disabled={offlineState === 'checking' || offlineState === 'saving' || offlineState === 'ready'}>{offlineState === 'ready' ? 'Saved for offline use' : offlineState === 'saving' ? 'Saving offline files…' : offlineState === 'error' ? 'Retry offline save' : 'Save for offline use'}</button>
+          {offlineState === 'saving' && <progress value={offlineProgress.saved} max={offlineProgress.total || 1} aria-label="Offline save progress" />}
+          <small className="setting-hint" role="status">{offlineState === 'ready' ? 'All reading and study files are saved on this device.' : offlineState === 'error' ? 'Offline save stopped. Reconnect and retry; saved files will be reused.' : offlineState === 'saving' ? `${offlineProgress.saved} of ${offlineProgress.total} files saved. Keep this page open.` : offlineState === 'checking' ? 'Checking offline files…' : 'Save once while online before reading without a connection.'}</small>
+        </div>}
       </div>}
       {savedOpen && <div className="settings-popover saved-popover">
         <div className="popover-head"><strong>Saved words</strong><button className="icon-button" aria-label="Close saved words" onClick={() => setSavedOpen(false)}><X size={17} /></button></div>

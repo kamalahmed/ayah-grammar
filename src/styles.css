@@ -175,6 +175,11 @@
 
 /* Independent reading controls and comfortably sized study summaries. */
 .setting-hint{display:block;color:#6f7d76;font-size:calc(11px * var(--font-scale,1));line-height:1.5;margin-top:5px}
+.offline-pack-control{border-top:1px solid #e9e5da;margin-top:18px;padding-top:2px}
+.offline-pack-control .action-button{width:100%;margin-top:12px}
+.offline-pack-control .action-button:disabled{cursor:default;opacity:.72}
+.offline-pack-control progress{display:block;width:100%;height:9px;margin:12px 0 9px;accent-color:#29695a}
+.offline-pack-control [role=status]{margin-top:9px}
 .verse-top+.word-glosses,.verse-top+.ayah-translations{margin-top:18px}
 .verb-overview{gap:8px}
 .verb-overview>span{padding:12px 10px}

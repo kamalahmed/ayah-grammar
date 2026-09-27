@@ -67,7 +67,7 @@ Bangla is central to the experience, alongside English. My focus is a calm readi
 - **Resizable desktop panels** and a collapsible surah sidebar.
 - **A mobile study sheet** with charts that scroll inside the panel.
 - **Saved words** and reading preferences stored in your browser.
-- **Installable PWA** with cached app assets and previously opened content available offline. Chapters are loaded and cached as you select them; the entire Quran is not pre-downloaded.
+- **Installable PWA** with visited content cached as you read. In **Display → Offline reading**, choose **Save for offline use** to store every surah and study file on that device. Recitation and external links still need internet.
 - **On-demand study tools:** word study and the verb library load when opened. Verb study fetches only the selected root's examples and charts.
 - **No account, API key or application backend** required.
 
@@ -113,6 +113,14 @@ npm run preview   # Serve the production build locally
 ```
 
 For PWA installation, serve the production build over HTTPS or use localhost. The development server also prints a local-network address for trying the responsive interface on another device.
+
+## Production deployment
+
+The live [Ayah Grammar subdomain](https://ayah.kamalahmed.me/) is a static site on Hostinger. A push to this repository's `main` branch runs the [Hostinger deployment workflow](.github/workflows/deploy-hostinger.yml): it tests and builds the app, stages `dist/` over SSH, checks SHA-256 hashes, then publishes the verified files with `index.html` switched last. The main domain has its own, separate deployment connection.
+
+Only `dist/` is published. SSH credentials and the verified server host key belong in GitHub Actions secrets; host, user, port, and document root are GitHub Actions variables. No private key, password, personal PDF, or local `.env` file belongs in this repository. The required names, initial setup, manual release command, and rollback procedure are in [Hostinger production deployment](docs/DEPLOYMENT.md).
+
+For full offline reading, open the installed PWA while online and use **Display → Offline reading → Save for offline use**. Keep it open until it reports completion. The current complete set is about 45 MB before browser storage overhead. A browser may later evict stored data, so check the status again before travel.
 
 ## How it works
 
